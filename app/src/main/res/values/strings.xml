@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">UmAR</string>
+
+    <!-- Schools Activity -->
+    <string name="welcome">Welcome to Malaga University</string>
+    <string name="select_school">Please, make the selection of your School</string>
+
 </resources>

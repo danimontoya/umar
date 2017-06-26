@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "644513680007",
+    "firebase_url": "https://umapp-b35d0.firebaseio.com",
+    "project_id": "umapp-b35d0",
+    "storage_bucket": "umapp-b35d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644513680007:android:b76c5ac097a69f48",
+        "android_client_info": {
+          "package_name": "com.uma.umar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644513680007-j65p80cpd6jv0qs67hr15bsja0df0us1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXc4fwOEr79S5jUNMQKdk5PVqlhCSE3WE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
