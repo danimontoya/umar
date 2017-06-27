@@ -3,6 +3,7 @@ package com.uma.umar.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by danieh on 6/26/17.
@@ -11,13 +12,13 @@ import java.io.Serializable;
 public class School implements Serializable {
 
     @SerializedName("name")
-    String name;
+    private String name;
     @SerializedName("address")
-    String address;
+    private String address;
     @SerializedName("phone")
-    String phone;
-    //List<String> images;
-    //List<Profile> profiles;
+    private String phone;
+    @SerializedName("images")
+    private List<ImageUrl> images;
 
     public School() {
     }
@@ -44,5 +45,13 @@ public class School implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<ImageUrl> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageUrl> images) {
+        this.images = images;
     }
 }
