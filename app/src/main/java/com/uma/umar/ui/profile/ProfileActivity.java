@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.Profile;
+import com.uma.umar.ui.dashboard.DashboardActivity;
 import com.uma.umar.ui.profile.adapter.ProfileAdapter;
 import com.uma.umar.ui.profile.adapter.ProfileViewHolder;
 import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
@@ -70,6 +71,7 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
         String profileKey = mAdapter.getRef(position).getKey();
         Toast.makeText(this, "Profile: " + profile.getName_en() + ", Key: " + profileKey, Toast.LENGTH_SHORT).show();
         Log.d("Profile", "Profile: " + profile.getName_en() + ", Key: " + profileKey);
+        DashboardActivity.startActivity(this);
     }
 
     @Override
