@@ -1,4 +1,4 @@
-package com.uma.umar.ui.schools.adapter;
+package com.uma.umar.ui.profile.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
-import com.uma.umar.model.School;
+import com.uma.umar.model.Profile;
 import com.uma.umar.ui.schools.listener.SchoolClickListener;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 
@@ -14,25 +14,25 @@ import com.uma.umar.ui.schools.listener.SchoolsListener;
  * Created by danieh on 6/27/17.
  */
 
-public class SchoolsAdapter extends FirebaseRecyclerAdapter<School, SchoolViewHolder> implements SchoolClickListener {
+public class ProfileAdapter extends FirebaseRecyclerAdapter<Profile, ProfileViewHolder> implements SchoolClickListener {
 
     private SchoolsListener mListener;
 
-    public SchoolsAdapter(SchoolsListener listener, Class<School> modelClass, @LayoutRes int modelLayout, Class<SchoolViewHolder> viewHolderClass, Query query) {
+    public ProfileAdapter(SchoolsListener listener, Class<Profile> modelClass, @LayoutRes int modelLayout, Class<ProfileViewHolder> viewHolderClass, Query query) {
         super(modelClass, modelLayout, viewHolderClass, query);
         mListener = listener;
     }
 
     @Override
-    protected void populateViewHolder(SchoolViewHolder schoolViewHolder, School school, int i) {
-        schoolViewHolder.bind(school);
+    protected void populateViewHolder(ProfileViewHolder profileViewHolder, Profile profile, int i) {
+        profileViewHolder.bind(profile);
     }
 
     @Override
-    public SchoolViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        SchoolViewHolder schoolViewHolder = super.onCreateViewHolder(parent, viewType);
-        schoolViewHolder.setOnClickListener(this);
-        return schoolViewHolder;
+    public ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ProfileViewHolder profileViewHolder = super.onCreateViewHolder(parent, viewType);
+        profileViewHolder.setOnClickListener(this);
+        return profileViewHolder;
     }
 
     @Override

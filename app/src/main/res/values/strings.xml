@@ -5,4 +5,7 @@
     <string name="welcome">Welcome to Malaga University</string>
     <string name="select_school">Please, make the selection of your School</string>
 
+    <!-- Profile Activity -->
+    <string name="select_profile">Select your profile</string>
+
 </resources>

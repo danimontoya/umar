@@ -13,9 +13,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.School;
-import com.uma.umar.model.SchoolViewHolder;
+import com.uma.umar.ui.profile.ProfileActivity;
+import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
+import com.uma.umar.ui.schools.adapter.SchoolViewHolder;
 import com.uma.umar.ui.schools.adapter.SchoolsAdapter;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
+import com.uma.umar.utils.FirebaseConstants;
 
 public class SchoolsActivity extends BaseActivity implements SchoolsListener {
 
@@ -25,7 +28,7 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
     private SchoolsAdapter mAdapter;
 
     //Getting reference to Firebase Database
-    private DatabaseReference mSchoolsRef = FirebaseDatabase.getInstance().getReference().child("schools").getRef();
+    private DatabaseReference mSchoolsRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.SCHOOLS).getRef();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,10 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+
+        RecyclerDividerDecorator decorator = new RecyclerDividerDecorator(this, LinearLayoutManager.VERTICAL);
+        mRecyclerView.addItemDecoration(decorator);
+
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -62,5 +69,6 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
         String schoolKey = mAdapter.getRef(position).getKey();
         Toast.makeText(this, "School: " + school.getName() + ", Key: " + schoolKey, Toast.LENGTH_SHORT).show();
         Log.d("Schools", "School: " + school.getName() + ", Key: " + schoolKey);
+        ProfileActivity.startActivity(this, schoolKey);
     }
 }

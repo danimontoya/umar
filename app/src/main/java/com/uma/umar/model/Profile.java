@@ -2,8 +2,6 @@ package com.uma.umar.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
-
 /**
  * Created by danieh on 6/27/17.
  */

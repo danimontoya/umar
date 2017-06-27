@@ -17,6 +17,8 @@ public class School implements Serializable {
     private String address;
     @SerializedName("phone")
     private String phone;
+    @SerializedName("logo")
+    private String logo;
     @SerializedName("images")
     private List<ImageUrl> images;
 
@@ -45,6 +47,14 @@ public class School implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public List<ImageUrl> getImages() {
