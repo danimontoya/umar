@@ -6,9 +6,7 @@ import android.view.View;
  * Created by danieh on 6/27/17.
  */
 
-public interface SchoolsListener {
-
-    void onDataChanged();
+public interface SchoolClickListener {
 
     void onItemClick(View view, int position);
 }

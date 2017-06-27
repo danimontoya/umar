@@ -3,8 +3,10 @@ package com.uma.umar.ui.schools;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +25,7 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
     private SchoolsAdapter mAdapter;
 
     //Getting reference to Firebase Database
-    private DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mSchoolsRef = FirebaseDatabase.getInstance().getReference().child("schools").getRef();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,6 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar_schools);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_schools);
 
-        DatabaseReference mSchoolsRef = mDatabaseReference.child("schools").getRef();
         mAdapter = new SchoolsAdapter(this, School.class, R.layout.school_item_layout, SchoolViewHolder.class, mSchoolsRef);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -53,5 +54,13 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
     @Override
     public void onDataChanged() {
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        School school = mAdapter.getItem(position);
+        String schoolKey = mAdapter.getRef(position).getKey();
+        Toast.makeText(this, "School: " + school.getName() + ", Key: " + schoolKey, Toast.LENGTH_SHORT).show();
+        Log.d("Schools", "School: " + school.getName() + ", Key: " + schoolKey);
     }
 }
