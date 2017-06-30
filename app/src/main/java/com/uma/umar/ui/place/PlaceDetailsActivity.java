@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
+import com.uma.umar.model.ARPoint;
 import com.uma.umar.model.Place;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.utils.FirebaseConstants;
@@ -108,7 +109,8 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.umar_image) {
-            ARActivity.startActivity(this, mPlace.getName_en(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
+            ARPoint arPoint = new ARPoint(mPlace.getName_en(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
+            ARActivity.startActivity(this, arPoint);
         }
     }
 

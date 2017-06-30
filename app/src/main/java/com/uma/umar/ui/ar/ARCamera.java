@@ -212,7 +212,8 @@ public class ARCamera extends ViewGroup implements SurfaceHolder.Callback {
             params.setPreviewSize(previewSize.width, previewSize.height);
             requestLayout();
 
-            camera.setParameters(params);
+            // FIXME: here was crashing
+            // camera.setParameters(params);
             camera.startPreview();
 
             generateProjectionMatrix();

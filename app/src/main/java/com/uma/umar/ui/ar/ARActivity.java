@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.opengl.Matrix;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -53,12 +54,9 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     private SensorManager sensorManager;
     private LocationManager locationManager;
 
-    public static void startActivity(Activity activity, String placeName, double latitude, double longitude, double altitude) {
+    public static void startActivity(Activity activity, ARPoint arPoint) {
         Intent intent = new Intent(activity, PlaceDetailsActivity.class);
-        intent.putExtra(PLACE_NAME, placeName);
-        intent.putExtra(LATITUDE, latitude);
-        intent.putExtra(LONGITUDE, longitude);
-        intent.putExtra(ALTITUDE, altitude);
+        intent.putExtra(PLACE_NAME, arPoint);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
     }
@@ -73,12 +71,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         tvCurrentLocation = (TextView) findViewById(R.id.tv_current_location);
 
-        String name = getIntent().getStringExtra(PLACE_NAME);
-        double latitude = getIntent().getDoubleExtra(LATITUDE, -1);
-        double longitude = getIntent().getDoubleExtra(LONGITUDE, -1);
-        double altitude = getIntent().getDoubleExtra(ALTITUDE, -1);
-        ARPoint arPoint = new ARPoint(name, latitude, longitude, altitude);
-
+        ARPoint arPoint = getIntent().getParcelableExtra(PLACE_NAME);
         arOverlayView = new AROverlayView(this, arPoint);
     }
 
