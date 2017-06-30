@@ -8,6 +8,10 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera2" />
 
     <application
         android:name=".UmARApplication"
@@ -27,10 +31,12 @@
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity
             android:name=".ui.dashboard.DashboardActivity"
-            android:label="@string/title_activity_dashboard2"
+            android:label="@string/title_activity_dashboard"
             android:theme="@style/AppThemeNoActionBar" />
         <activity android:name=".ui.category.CategoriesActivity" />
         <activity android:name=".ui.place.PlaceDetailsActivity" />
+        <activity android:name=".ui.ar.ARActivity" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
