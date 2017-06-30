@@ -11,4 +11,6 @@ public class FirebaseConstants {
     public static final String SCHOOL_ID = "schoolId";
 
     public static final String PROFILES = "profiles";
+
+    public static final String PLACES = "places";
 }

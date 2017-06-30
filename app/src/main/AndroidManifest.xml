@@ -21,7 +21,8 @@
         <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:label="@string/title_activity_dashboard2"
-            android:theme="@style/AppThemeNoActionBar"></activity>
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity android:name=".ui.category.CategoriesActivity"></activity>
     </application>
 
 </manifest>

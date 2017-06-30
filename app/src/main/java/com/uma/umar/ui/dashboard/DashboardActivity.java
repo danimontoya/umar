@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.uma.umar.R;
+import com.uma.umar.ui.category.CategoriesActivity;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -121,7 +122,7 @@ public class DashboardActivity extends AppCompatActivity
         if (id == R.id.ar_button) {
             dialogNotDoneYet();
         } else if (id == R.id.places_button) {
-
+            CategoriesActivity.startActivity(this);
         } else if (id == R.id.qr_button) {
             dialogNotDoneYet();
         }else if (id==R.id.info_button) {
