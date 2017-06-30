@@ -55,7 +55,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     private LocationManager locationManager;
 
     public static void startActivity(Activity activity, ARPoint arPoint) {
-        Intent intent = new Intent(activity, PlaceDetailsActivity.class);
+        Intent intent = new Intent(activity, ARActivity.class);
         intent.putExtra(PLACE_NAME, arPoint);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
