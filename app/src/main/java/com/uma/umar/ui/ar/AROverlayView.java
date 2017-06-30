@@ -1,6 +1,8 @@
 package com.uma.umar.ui.ar;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +11,7 @@ import android.location.Location;
 import android.opengl.Matrix;
 import android.view.View;
 
+import com.uma.umar.R;
 import com.uma.umar.helper.LocationHelper;
 import com.uma.umar.model.ARPoint;
 
@@ -87,7 +90,9 @@ public class AROverlayView extends View {
                 float x = (0.5f + cameraCoordinateVector[0] / cameraCoordinateVector[3]) * canvas.getWidth();
                 float y = (0.5f - cameraCoordinateVector[1] / cameraCoordinateVector[3]) * canvas.getHeight();
 
-                canvas.drawCircle(x, y, radius, paint);
+                //canvas.drawCircle(x, y, radius, paint);
+                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker);
+                canvas.drawBitmap(bitmap, x, y, paint);
                 canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2), y - 80, paint);
             }
         }
