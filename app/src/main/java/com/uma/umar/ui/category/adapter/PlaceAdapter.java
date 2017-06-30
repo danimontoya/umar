@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.Query;
 import com.uma.umar.model.Place;
-import com.uma.umar.model.Profile;
-import com.uma.umar.ui.profile.adapter.ProfileViewHolder;
 import com.uma.umar.ui.schools.listener.SchoolClickListener;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 

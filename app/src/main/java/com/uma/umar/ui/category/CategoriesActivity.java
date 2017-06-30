@@ -17,7 +17,7 @@ import com.uma.umar.R;
 import com.uma.umar.model.Place;
 import com.uma.umar.ui.category.adapter.PlaceAdapter;
 import com.uma.umar.ui.category.adapter.PlaceViewHolder;
-import com.uma.umar.ui.place.MapsActivity;
+import com.uma.umar.ui.place.PlaceDetailsActivity;
 import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
@@ -68,7 +68,7 @@ public class CategoriesActivity extends BaseActivity implements SchoolsListener 
         String placeKey = mAdapter.getRef(position).getKey();
         Toast.makeText(this, "Place: " + place.getName_en() + ", Key: " + placeKey, Toast.LENGTH_SHORT).show();
         Log.d("Place", "Place: " + place.getName_en() + ", Key: " + placeKey);
-        MapsActivity.startActivity(this, placeKey);
+        PlaceDetailsActivity.startActivity(this, placeKey);
     }
 
     @Override
