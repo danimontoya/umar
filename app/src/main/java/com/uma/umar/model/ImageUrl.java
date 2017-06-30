@@ -11,7 +11,7 @@ public class ImageUrl {
     @SerializedName("url")
     private String url;
 
-    public ImageUrl(){
+    public ImageUrl() {
     }
 
     public String getUrl() {

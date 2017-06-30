@@ -47,7 +47,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="AR"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
 
             </RelativeLayout>
 
@@ -64,7 +64,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Places"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -89,7 +89,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="QR"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
 
             </RelativeLayout>
 
@@ -106,7 +106,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Info"
-                    android:textSize="40sp"/>
+                    android:textSize="40sp" />
 
             </RelativeLayout>
 

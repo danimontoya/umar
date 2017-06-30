@@ -31,7 +31,7 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
     private DatabaseReference mProfilesRef;
     private ProfileAdapter mAdapter;
 
-    public static void startActivity(Activity activity, String schoolId){
+    public static void startActivity(Activity activity, String schoolId) {
         Intent intent = new Intent(activity, ProfileActivity.class);
         intent.putExtra(FirebaseConstants.SCHOOL_ID, schoolId);
         activity.startActivity(intent);

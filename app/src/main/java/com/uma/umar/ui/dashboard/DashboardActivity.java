@@ -26,7 +26,7 @@ public class DashboardActivity extends AppCompatActivity
     private View mQRButton;
     private View mInfoButton;
 
-    public static void startActivity(Activity activity){
+    public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, DashboardActivity.class);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
@@ -125,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity
             CategoriesActivity.startActivity(this);
         } else if (id == R.id.qr_button) {
             dialogNotDoneYet();
-        }else if (id==R.id.info_button) {
+        } else if (id == R.id.info_button) {
             dialogNotDoneYet();
         }
     }

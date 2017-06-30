@@ -14,7 +14,7 @@ import com.uma.umar.ui.schools.listener.SchoolClickListener;
  * Created by danieh on 6/27/17.
  */
 
-public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private final ImageView mImage;
     private final TextView mName;
@@ -32,7 +32,7 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
         mView.setOnClickListener(this);
     }
 
-    public void bind(Place place){
+    public void bind(Place place) {
         mName.setText(place.getName_en());
         StringBuilder builder = new StringBuilder("[");
         builder.append(place.getLatitude());
@@ -45,13 +45,13 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
         Picasso.with(mImage.getContext()).load(place.getImage()).into(mImage);
     }
 
-    public void setOnClickListener(SchoolClickListener listener){
+    public void setOnClickListener(SchoolClickListener listener) {
         mListener = listener;
     }
 
     @Override
     public void onClick(View view) {
-        if (mListener!=null)
+        if (mListener != null)
             mListener.onItemClick(view, getAdapterPosition());
     }
 }

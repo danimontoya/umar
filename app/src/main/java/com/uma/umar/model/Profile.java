@@ -15,7 +15,7 @@ public class Profile {
     @SerializedName("image")
     private String image;
 
-    public Profile(){
+    public Profile() {
     }
 
     public String getName_es() {
