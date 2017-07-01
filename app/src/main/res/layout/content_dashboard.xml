@@ -15,9 +15,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@mipmap/etsiiuma2"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:srcCompat="@mipmap/etsiiuma2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,16 +36,24 @@
                 android:id="@+id/ar_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_bright">
+                android:layout_margin="10dp"
+                android:layout_weight="1">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/ar_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/ar_textview"
+                    app:srcCompat="@mipmap/augmented_reality" />
+
+                <TextView
+                    android:id="@+id/ar_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="AR"
-                    android:textSize="40sp" />
+                    android:text="Augmented reality"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -55,16 +61,24 @@
                 android:id="@+id/places_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_green_light">
+                android:layout_margin="10dp"
+                android:layout_weight="1">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/places_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/places_textview"
+                    app:srcCompat="@mipmap/magnifying_glass_lens" />
+
+                <TextView
+                    android:id="@+id/places_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="Places"
-                    android:textSize="40sp" />
+                    android:text="Know your way around?"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -80,16 +94,24 @@
                 android:id="@+id/qr_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_red_light">
+                android:layout_margin="10dp"
+                android:layout_weight="1">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/qr_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/qr_textview"
+                    app:srcCompat="@mipmap/qr_icon" />
+
+                <TextView
+                    android:id="@+id/qr_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="QR"
-                    android:textSize="40sp" />
+                    android:text="Scan your QR code"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -97,16 +119,24 @@
                 android:id="@+id/info_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_orange_light">
+                android:layout_margin="10dp"
+                android:layout_weight="1">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/info_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/info_textview"
+                    app:srcCompat="@mipmap/info_icon" />
+
+                <TextView
+                    android:id="@+id/info_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="Info"
-                    android:textSize="40sp" />
+                    android:text="About your School"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
