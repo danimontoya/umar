@@ -71,7 +71,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         tvCurrentLocation = (TextView) findViewById(R.id.tv_current_location);
 
-        ArrayList<ARPoint> arPoints = getIntent().getParcelableExtra(AR_POINTS);
+        ArrayList<ARPoint> arPoints = getIntent().getParcelableArrayListExtra(AR_POINTS);
         arOverlayView = new AROverlayView(this, arPoints);
     }
 
