@@ -12,9 +12,11 @@ public class ARPoint implements Parcelable {
 
     private Location location;
     private String name;
+    private String url;
 
-    public ARPoint(String name, double lat, double lon, double altitude) {
+    public ARPoint(String name, String url, double lat, double lon, double altitude) {
         this.name = name;
+        this.url = url;
         location = new Location("ARPoint");
         location.setLatitude(lat);
         location.setLongitude(lon);
@@ -29,9 +31,14 @@ public class ARPoint implements Parcelable {
         return name;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     protected ARPoint(Parcel in) {
         location = (Location) in.readValue(Location.class.getClassLoader());
         name = in.readString();
+        url = in.readString();
     }
 
     @Override
@@ -43,6 +50,7 @@ public class ARPoint implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(location);
         dest.writeString(name);
+        dest.writeString(url);
     }
 
     @SuppressWarnings("unused")

@@ -9,22 +9,35 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
+import com.uma.umar.model.ARPoint;
+import com.uma.umar.model.Place;
+import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.ui.category.CategoriesActivity;
+import com.uma.umar.utils.FirebaseConstants;
 
-public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+import java.util.ArrayList;
+
+public class DashboardActivity extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, ValueEventListener {
 
     private View mARButton;
     private View mPlacesButton;
     private View mQRButton;
     private View mInfoButton;
+
+    private DatabaseReference mPlacesRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).getRef();
 
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, DashboardActivity.class);
@@ -120,7 +133,8 @@ public class DashboardActivity extends AppCompatActivity
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.ar_button) {
-            dialogNotDoneYet();
+            //dialogNotDoneYet();
+            mPlacesRef.addValueEventListener(this);
         } else if (id == R.id.places_button) {
             CategoriesActivity.startActivity(this);
         } else if (id == R.id.qr_button) {
@@ -140,5 +154,21 @@ public class DashboardActivity extends AppCompatActivity
                     }
                 });
         builder.create().show();
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        ArrayList<ARPoint> arPoints = new ArrayList<>();
+        for (DataSnapshot placeSnapshot : dataSnapshot.getChildren()) {
+            Place place = placeSnapshot.getValue(Place.class);
+            ARPoint arPoint = new ARPoint(place.getName_en(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
+            arPoints.add(arPoint);
+        }
+        ARActivity.startActivity(this, arPoints);
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 }

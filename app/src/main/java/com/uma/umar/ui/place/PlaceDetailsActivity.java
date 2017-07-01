@@ -30,6 +30,8 @@ import com.uma.umar.model.Place;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.utils.FirebaseConstants;
 
+import java.util.ArrayList;
+
 public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCallback, ValueEventListener, View.OnClickListener {
 
     public static final String PLACE_KEY = "placeKey";
@@ -109,8 +111,10 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.umar_image) {
-            ARPoint arPoint = new ARPoint(mPlace.getName_en(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
-            ARActivity.startActivity(this, arPoint);
+            ARPoint arPoint = new ARPoint(mPlace.getName_en(), mPlace.getImage(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
+            ArrayList<ARPoint> arPoints = new ArrayList<>();
+            arPoints.add(arPoint);
+            ARActivity.startActivity(this, arPoints);
         }
     }
 

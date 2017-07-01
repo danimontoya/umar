@@ -15,7 +15,6 @@ import android.location.LocationManager;
 import android.opengl.Matrix;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,12 +26,13 @@ import android.widget.Toast;
 
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
-import com.uma.umar.ui.place.PlaceDetailsActivity;
+
+import java.util.ArrayList;
 
 public class ARActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
 
     public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
-    public static final String PLACE_NAME = "placeName";
+    public static final String AR_POINTS = "arPoints";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String ALTITUDE = "altitude";
@@ -54,9 +54,9 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     private SensorManager sensorManager;
     private LocationManager locationManager;
 
-    public static void startActivity(Activity activity, ARPoint arPoint) {
+    public static void startActivity(Activity activity, ArrayList<ARPoint> arPoints) {
         Intent intent = new Intent(activity, ARActivity.class);
-        intent.putExtra(PLACE_NAME, arPoint);
+        intent.putParcelableArrayListExtra(AR_POINTS, arPoints);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
     }
@@ -71,8 +71,8 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         tvCurrentLocation = (TextView) findViewById(R.id.tv_current_location);
 
-        ARPoint arPoint = getIntent().getParcelableExtra(PLACE_NAME);
-        arOverlayView = new AROverlayView(this, arPoint);
+        ArrayList<ARPoint> arPoints = getIntent().getParcelableExtra(AR_POINTS);
+        arOverlayView = new AROverlayView(this, arPoints);
     }
 
     @Override
