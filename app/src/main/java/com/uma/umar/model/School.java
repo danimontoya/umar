@@ -15,8 +15,22 @@ public class School implements Serializable {
     private String name;
     @SerializedName("address")
     private String address;
-    @SerializedName("phone")
-    private String phone;
+    @SerializedName("description_en")
+    private String description_en;
+    @SerializedName("description_es")
+    private String description_es;
+    @SerializedName("director")
+    private String director;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("phone_concierge")
+    private String phone_concierge;
+    @SerializedName("phone_secretary")
+    private String phone_secretary;
+    @SerializedName("latitude")
+    private double latitude;
+    @SerializedName("longitude")
+    private double longitude;
     @SerializedName("logo")
     private String logo;
     @SerializedName("images")
@@ -41,12 +55,68 @@ public class School implements Serializable {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDescription_en() {
+        return description_en;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setDescription_en(String description_en) {
+        this.description_en = description_en;
+    }
+
+    public String getDescription_es() {
+        return description_es;
+    }
+
+    public void setDescription_es(String description_es) {
+        this.description_es = description_es;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone_concierge() {
+        return phone_concierge;
+    }
+
+    public void setPhone_concierge(String phone_concierge) {
+        this.phone_concierge = phone_concierge;
+    }
+
+    public String getPhone_secretary() {
+        return phone_secretary;
+    }
+
+    public void setPhone_secretary(String phone_secretary) {
+        this.phone_secretary = phone_secretary;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getLogo() {

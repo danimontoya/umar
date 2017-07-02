@@ -23,6 +23,7 @@ import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.model.Place;
+import com.uma.umar.ui.about.AboutActivity;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.ui.category.CategoriesActivity;
 import com.uma.umar.utils.FirebaseConstants;
@@ -140,7 +141,7 @@ public class DashboardActivity extends BaseActivity
         } else if (id == R.id.qr_button) {
             dialogNotDoneYet();
         } else if (id == R.id.info_button) {
-            dialogNotDoneYet();
+            AboutActivity.startActivity(this);
         }
     }
 

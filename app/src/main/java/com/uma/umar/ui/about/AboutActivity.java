@@ -1,0 +1,85 @@
+package com.uma.umar.ui.about;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.uma.umar.BaseActivity;
+import com.uma.umar.R;
+import com.uma.umar.model.School;
+import com.uma.umar.utils.FirebaseConstants;
+
+public class AboutActivity extends BaseActivity implements OnMapReadyCallback, ValueEventListener {
+
+    public static void startActivity(Activity activity) {
+        Intent intent = new Intent(activity, AboutActivity.class);
+        activity.startActivity(intent);
+    }
+
+    private School mSchool;
+    private SchoolViewHolder mViewHolder;
+    private GoogleMap mMap;
+    private DatabaseReference mRef;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+
+        mViewHolder = new SchoolViewHolder(findViewById(R.id.root));
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        mRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.SCHOOLS).child("-Ko2pDlg9EtFohSAxkJv").getRef();
+        mRef.addValueEventListener(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        mSchool = dataSnapshot.getValue(School.class);
+        mViewHolder.nameTextView.setText(mSchool.getName());
+        mViewHolder.descriptionTextView.setText(mSchool.getDescription_en());
+
+        // Add a marker and move the camera
+        LatLng latLng = new LatLng(mSchool.getLatitude(), mSchool.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(latLng).title(mSchool.getName()).icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)      // Sets the center of the map to Mountain View
+                .zoom(17)            // Sets the zoom
+                .build();            // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        mViewHolder.addressTextView.setText(mSchool.getAddress());
+        mViewHolder.directorTextView.setText(mSchool.getDirector());
+        mViewHolder.emailTextView.setText(mSchool.getEmail());
+        mViewHolder.phoneConciergeTextView.setText(mSchool.getPhone_concierge());
+        mViewHolder.phoneSecretaryTextView.setText(mSchool.getPhone_secretary());
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+        Log.d("School", "School: databaseError=" + databaseError);
+    }
+}
