@@ -86,26 +86,27 @@ public class AROverlayView extends View {
                 final float y = (0.5f - cameraCoordinateVector[1] / cameraCoordinateVector[3]) * canvas.getHeight();
 
                 //canvas.drawCircle(x, y, radius, paint);
-                //Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker);
-                //canvas.drawBitmap(bitmap, x, y, paint);
-                Picasso.with(getContext())
-                        .load(arPoints.get(i).getUrl())
-                        .into(new Target() {
-                            @Override
-                            public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
-                                canvas.drawBitmap(bitmap, x, y, paint);
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Drawable drawable) {
-
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable drawable) {
-
-                            }
-                        });
+                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker);
+                canvas.drawBitmap(bitmap, x, y, paint);
+                // FIXME get images before and cache them
+//                Picasso.with(getContext())
+//                        .load(arPoints.get(i).getUrl())
+//                        .into(new Target() {
+//                            @Override
+//                            public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
+//                                canvas.drawBitmap(bitmap, x, y, paint);
+//                            }
+//
+//                            @Override
+//                            public void onBitmapFailed(Drawable drawable) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPrepareLoad(Drawable drawable) {
+//
+//                            }
+//                        });
 
                 canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2), y - 80, paint);
             }
