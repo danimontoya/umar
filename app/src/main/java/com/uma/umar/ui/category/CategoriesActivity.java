@@ -21,6 +21,7 @@ import com.uma.umar.ui.place.PlaceDetailsActivity;
 import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UMALog;
 
 public class CategoriesActivity extends BaseActivity implements SchoolsListener {
 
@@ -67,7 +68,7 @@ public class CategoriesActivity extends BaseActivity implements SchoolsListener 
         Place place = mAdapter.getItem(position);
         String placeKey = mAdapter.getRef(position).getKey();
         Toast.makeText(this, "Place: " + place.getName_en() + ", Key: " + placeKey, Toast.LENGTH_SHORT).show();
-        Log.d("Place", "Place: " + place.getName_en() + ", Key: " + placeKey);
+        UMALog.d("Place", "Place: " + place.getName_en() + ", Key: " + placeKey);
         PlaceDetailsActivity.startActivity(this, placeKey);
     }
 

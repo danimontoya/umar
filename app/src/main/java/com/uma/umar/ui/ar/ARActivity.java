@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
+import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
 
@@ -231,7 +232,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
                 }
             }
         } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
+            UMALog.e(TAG, ex.getMessage());
 
         }
     }

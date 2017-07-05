@@ -21,6 +21,7 @@ import com.uma.umar.ui.profile.adapter.ProfileViewHolder;
 import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UMALog;
 
 public class ProfileActivity extends BaseActivity implements SchoolsListener {
 
@@ -70,7 +71,7 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
         Profile profile = mAdapter.getItem(position);
         String profileKey = mAdapter.getRef(position).getKey();
         Toast.makeText(this, "Profile: " + profile.getName_en() + ", Key: " + profileKey, Toast.LENGTH_SHORT).show();
-        Log.d("Profile", "Profile: " + profile.getName_en() + ", Key: " + profileKey);
+        UMALog.d("Profile", "Profile: " + profile.getName_en() + ", Key: " + profileKey);
         DashboardActivity.startActivity(this);
     }
 

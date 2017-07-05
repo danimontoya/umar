@@ -3,7 +3,6 @@ package com.uma.umar.ui.about;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,6 +21,7 @@ import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.School;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UMALog;
 
 public class AboutActivity extends BaseActivity implements OnMapReadyCallback, ValueEventListener {
 
@@ -80,6 +80,6 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-        Log.d("School", "School: databaseError=" + databaseError);
+        UMALog.d("School", "School: databaseError=" + databaseError);
     }
 }

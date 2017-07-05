@@ -19,6 +19,7 @@ import com.uma.umar.ui.schools.adapter.SchoolViewHolder;
 import com.uma.umar.ui.schools.adapter.SchoolsAdapter;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UMALog;
 
 public class SchoolsActivity extends BaseActivity implements SchoolsListener {
 
@@ -68,7 +69,7 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
         School school = mAdapter.getItem(position);
         String schoolKey = mAdapter.getRef(position).getKey();
         Toast.makeText(this, "School: " + school.getName() + ", Key: " + schoolKey, Toast.LENGTH_SHORT).show();
-        Log.d("Schools", "School: " + school.getName() + ", Key: " + schoolKey);
+        UMALog.d("Schools", "School: " + school.getName() + ", Key: " + schoolKey);
         ProfileActivity.startActivity(this, schoolKey);
     }
 }

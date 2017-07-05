@@ -29,6 +29,7 @@ import com.uma.umar.model.ARPoint;
 import com.uma.umar.model.Place;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
 
@@ -86,7 +87,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         mPlace = dataSnapshot.getValue(Place.class);
-        Log.d("Place", "Place: name=" + mPlace.getName_en());
+        UMALog.d("Place", "Place: name=" + mPlace.getName_en());
 
         mPlaceNameTextView.setText(mPlace.getName_en());
 
@@ -104,7 +105,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-        Log.d("Place", "Place: databaseError=" + databaseError);
+        UMALog.d("Place", "Place: databaseError=" + databaseError);
     }
 
     @Override

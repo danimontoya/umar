@@ -44,6 +44,7 @@ dependencies {
 
     // Play services Maps
     compile 'com.google.android.gms:play-services-maps:11.0.1'
+    compile 'com.google.android.gms:play-services-vision:11.0.1'
 
     // Gson
     compile 'com.google.code.gson:gson:2.8.0'

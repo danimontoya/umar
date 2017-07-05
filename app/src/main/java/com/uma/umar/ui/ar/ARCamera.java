@@ -13,6 +13,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.uma.umar.utils.UMALog;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -117,7 +119,7 @@ public class ARCamera extends ViewGroup implements SurfaceHolder.Callback {
                 camera.setPreviewDisplay(holder);
             }
         } catch (IOException exception) {
-            Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
+            UMALog.e(TAG, "IOException caused by setPreviewDisplay()", exception);
         }
     }
 

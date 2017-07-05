@@ -1,19 +1,18 @@
 package com.uma.umar.ui.dashboard;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +25,8 @@ import com.uma.umar.model.Place;
 import com.uma.umar.ui.about.AboutActivity;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.ui.category.CategoriesActivity;
+import com.uma.umar.ui.place.PlaceDetailsActivity;
+import com.uma.umar.ui.qr.BarcodeCaptureActivity;
 import com.uma.umar.utils.FirebaseConstants;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class DashboardActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -134,27 +135,26 @@ public class DashboardActivity extends BaseActivity
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.ar_button) {
-            //dialogNotDoneYet();
             mPlacesRef.addValueEventListener(this);
+
         } else if (id == R.id.places_button) {
             CategoriesActivity.startActivity(this);
+
         } else if (id == R.id.qr_button) {
-            dialogNotDoneYet();
+            BarcodeCaptureActivity.startActivity(this);
+
         } else if (id == R.id.info_button) {
             AboutActivity.startActivity(this);
         }
     }
 
-    private void dialogNotDoneYet() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("UmAR");
-        builder.setMessage("Eeee no soy tan rapido.. esto esta en proceso aun.. Waait for it! ;)")
-                .setPositiveButton("Vale hijoooo..! I'll waaait!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create().show();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // TODO: do something after scanning the QR code
+        if (requestCode == BarcodeCaptureActivity.RC_BARCODE_CAPTURE && resultCode == CommonStatusCodes.SUCCESS) {
+            PlaceDetailsActivity.startActivity(this, data.getStringExtra(BarcodeCaptureActivity.BarcodeObject));
+        }
     }
 
     @Override
@@ -163,6 +163,7 @@ public class DashboardActivity extends BaseActivity
         for (DataSnapshot placeSnapshot : dataSnapshot.getChildren()) {
             Place place = placeSnapshot.getValue(Place.class);
             ARPoint arPoint = new ARPoint(place.getName_en(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
+            // TODO: 7/4/17 Picasso get bitmap here?
             arPoints.add(arPoint);
         }
         ARActivity.startActivity(this, arPoints);
