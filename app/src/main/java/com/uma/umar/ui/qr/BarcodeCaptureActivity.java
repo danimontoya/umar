@@ -293,6 +293,12 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
     }
 
     @Override
+    public void onBackPressed() {
+        setResult(CommonStatusCodes.CANCELED);
+        super.onBackPressed();
+    }
+
+    @Override
     public void onBarcodeFound(Barcode barcode) {
 
         UMALog.d("BarcodeCaptureActivity", "onBarcodeFound: " + barcode.displayValue);
