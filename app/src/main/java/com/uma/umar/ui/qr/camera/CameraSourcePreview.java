@@ -17,20 +17,23 @@ package com.uma.umar.ui.qr.camera;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.support.annotation.RequiresPermission;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.images.Size;
+import com.uma.umar.R;
 import com.uma.umar.utils.UMALog;
 
 import java.io.IOException;
 
-public class CameraSourcePreview extends ViewGroup {
+public class CameraSourcePreview extends RelativeLayout implements SurfaceHolder.Callback {
+
     private static final String TAG = "CameraSourcePreview";
 
     private Context mContext;
@@ -40,6 +43,7 @@ public class CameraSourcePreview extends ViewGroup {
     private CameraSource mCameraSource;
 
     private GraphicOverlay mOverlay;
+    private boolean showingDialog = false;
 
     public CameraSourcePreview(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,7 +52,7 @@ public class CameraSourcePreview extends ViewGroup {
         mSurfaceAvailable = false;
 
         mSurfaceView = new SurfaceView(context);
-        mSurfaceView.getHolder().addCallback(new SurfaceCallback());
+        mSurfaceView.getHolder().addCallback(this);
         addView(mSurfaceView);
     }
 
@@ -62,7 +66,7 @@ public class CameraSourcePreview extends ViewGroup {
 
         if (mCameraSource != null) {
             mStartRequested = true;
-            startIfReady();
+            startIfCameraReady();
         }
     }
 
@@ -106,72 +110,90 @@ public class CameraSourcePreview extends ViewGroup {
         }
     }
 
-    private class SurfaceCallback implements SurfaceHolder.Callback {
-        @Override
-        public void surfaceCreated(SurfaceHolder surface) {
-            mSurfaceAvailable = true;
-            try {
-                startIfReady();
-            } catch (SecurityException se) {
-                UMALog.e(TAG,"Do not have permission to start the camera", se);
-            } catch (IOException e) {
-                UMALog.e(TAG, "Could not start camera source.", e);
-            }
-        }
-
-        @Override
-        public void surfaceDestroyed(SurfaceHolder surface) {
-            mSurfaceAvailable = false;
-        }
-
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        }
-    }
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int width = 320;
-        int height = 240;
+        int previewWidth = 320;
+        int previewHeight = 240;
         if (mCameraSource != null) {
             Size size = mCameraSource.getPreviewSize();
             if (size != null) {
-                width = size.getWidth();
-                height = size.getHeight();
+                previewWidth = size.getWidth();
+                previewHeight = size.getHeight();
             }
         }
 
         // Swap width and height sizes when in portrait, since it will be rotated 90 degrees
         if (isPortraitMode()) {
-            int tmp = width;
-            //noinspection SuspiciousNameCombination
-            width = height;
-            height = tmp;
+            int tmp = previewWidth;
+            previewWidth = previewHeight;
+            previewHeight = tmp;
         }
 
-        final int layoutWidth = right - left;
-        final int layoutHeight = bottom - top;
+        final int viewWidth = right - left;
+        final int viewHeight = bottom - top;
 
-        // Computes height and width for potentially doing fit width.
-        int childWidth = layoutWidth;
-        int childHeight = (int)(((float) layoutWidth / (float) width) * height);
+        int childWidth;
+        int childHeight;
+        int childXOffset = 0;
+        int childYOffset = 0;
+        float widthRatio = (float) viewWidth / (float) previewWidth;
+        float heightRatio = (float) viewHeight / (float) previewHeight;
 
-        // If height is too tall using fit width, does fit height instead.
-        if (childHeight > layoutHeight) {
-            childHeight = layoutHeight;
-            childWidth = (int)(((float) layoutHeight / (float) height) * width);
+        // To fill the view with the camera preview, while also preserving the correct aspect ratio,
+        // it is usually necessary to slightly oversize the child and to crop off portions along one
+        // of the dimensions.  We scale up based on the dimension requiring the most correction, and
+        // compute a crop offset for the other dimension.
+        if (widthRatio > heightRatio) {
+            childWidth = viewWidth;
+            childHeight = (int) ((float) previewHeight * widthRatio);
+            childYOffset = (childHeight - viewHeight) / 2;
+        } else {
+            childWidth = (int) ((float) previewWidth * heightRatio);
+            childHeight = viewHeight;
+            childXOffset = (childWidth - viewWidth) / 2;
         }
 
         for (int i = 0; i < getChildCount(); ++i) {
-            getChildAt(i).layout(0, 0, childWidth, childHeight);
+            // One dimension will be cropped.  We shift child over or up by this offset and adjust
+            // the size to maintain the proper aspect ratio.
+            getChildAt(i).layout(
+                    -1 * childXOffset, -1 * childYOffset,
+                    childWidth - childXOffset, childHeight - childYOffset);
         }
 
         try {
             startIfReady();
+        } catch (Exception e) {
+            UMALog.e(TAG, "Could not start camera source.", e);
+        }
+    }
+
+    private void startIfCameraReady() {
+        try {
+            startIfReady();
         } catch (SecurityException se) {
-            UMALog.e(TAG,"Do not have permission to start the camera", se);
+            UMALog.e(TAG, "Do not have permission to start the camera", se);
         } catch (IOException e) {
             UMALog.e(TAG, "Could not start camera source.", e);
+        } catch (RuntimeException e) {
+            UMALog.e(TAG, "Could not start camera source. RuntimeException", e);
+            showNoCameraDialog(mContext);
+        }
+    }
+
+    private void showNoCameraDialog(Context context) {
+        if (!showingDialog) {
+            showingDialog = true;
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle(R.string.app_name);
+            builder.setMessage(R.string.barcode_no_camera)
+                    .setPositiveButton(R.string.barcode_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            showingDialog = false;
+                            dialog.dismiss();
+                        }
+                    });
+            builder.create().show();
         }
     }
 
@@ -186,5 +208,21 @@ public class CameraSourcePreview extends ViewGroup {
 
         UMALog.d(TAG, "isPortraitMode returning false by default");
         return false;
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        mSurfaceAvailable = true;
+        startIfCameraReady();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+        // not needed atm
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        mSurfaceAvailable = false;
     }
 }

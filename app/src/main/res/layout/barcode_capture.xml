@@ -1,21 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:keepScreenOn="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="4">
 
-    <com.uma.umar.ui.qr.camera.CameraSourcePreview
-        android:id="@+id/preview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
-        <com.uma.umar.ui.qr.camera.GraphicOverlay
-            android:id="@+id/graphicOverlay"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+        <com.uma.umar.ui.qr.camera.CameraSourcePreview
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </com.uma.umar.ui.qr.camera.CameraSourcePreview>
+            <com.uma.umar.ui.qr.camera.GraphicOverlay
+                android:id="@+id/graphicOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.uma.umar.ui.qr.camera.CameraSourcePreview>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/scan_frame_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingEnd="@dimen/barcode_scanner_margin"
+                android:paddingStart="@dimen/barcode_scanner_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin"
+                android:scaleType="fitXY"
+                app:srcCompat="@mipmap/scan_field_block" />
+
+            <ImageView
+                android:id="@+id/flashlight_imageview"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@mipmap/ic_flash_off" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/barcode_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:padding="@dimen/margin_16dp">
+
+        <ImageView
+            android:id="@+id/uma_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:minHeight="75dp"
+            app:srcCompat="@mipmap/uma_logo" />
+
+        <TextView
+            android:id="@+id/barcode_place_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uma_logo"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Place found:"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <TextView
+            android:id="@+id/barcode_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/barcode_place_label"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Scan a valid QR code to get the place details"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <TextView
+            android:id="@+id/barcode_place_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/barcode_place"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            tool:text="Blablablah" />
+
+        <ImageView
+            android:id="@+id/barcode_places_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/barcode_place_description"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            app:srcCompat="@mipmap/magnifying_glass_lens" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

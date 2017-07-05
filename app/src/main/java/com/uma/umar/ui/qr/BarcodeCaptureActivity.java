@@ -39,8 +39,11 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
+import com.uma.umar.model.BarcodePlace;
 import com.uma.umar.ui.qr.camera.CameraSource;
 import com.uma.umar.ui.qr.camera.CameraSourcePreview;
 import com.uma.umar.ui.qr.camera.GraphicOverlay;
@@ -53,7 +56,7 @@ import java.io.IOException;
  * rear facing camera. During detection overlay graphics are drawn to indicate the position,
  * size, and ID of each barcode.
  */
-public final class BarcodeCaptureActivity extends BaseActivity implements BarcodeGraphicListener {
+public final class BarcodeCaptureActivity extends BaseActivity implements BarcodeGraphicListener, View.OnClickListener {
 
     public static final int RC_BARCODE_CAPTURE = 9001;
     public static final String BarcodeObject = "Barcode";
@@ -67,8 +70,9 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
     private static final int RC_HANDLE_CAMERA_PERM = 2;
 
     private CameraSource mCameraSource;
-    private CameraSourcePreview mPreview;
-    private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
+    private BarcodeViewHolder mViewHolder;
+    private BarcodePlace barcodePlace;
+    private Gson gson;
 
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, BarcodeCaptureActivity.class);
@@ -83,8 +87,8 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
         super.onCreate(icicle);
         setContentView(R.layout.barcode_capture);
 
-        mPreview = (CameraSourcePreview) findViewById(R.id.preview);
-        mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) findViewById(R.id.graphicOverlay);
+        mViewHolder = new BarcodeViewHolder(findViewById(R.id.topLayout));
+        mViewHolder.mPlaceDetailsButton.setOnClickListener(this);
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -95,6 +99,8 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
         } else {
             requestCameraPermission();
         }
+
+        gson = new GsonBuilder().create();
 
         //(Snackbar.make(mGraphicOverlay, "Tap to capture. Pinch/Stretch to zoom", Snackbar.LENGTH_LONG).show();
     }
@@ -124,7 +130,7 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
         };
 
         findViewById(R.id.topLayout).setOnClickListener(listener);
-        Snackbar.make(mGraphicOverlay, R.string.permission_camera_rationale, Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, listener).show();
+        Snackbar.make(mViewHolder.mGraphicOverlay, R.string.permission_camera_rationale, Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, listener).show();
     }
 
     /**
@@ -144,7 +150,7 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
         // graphics for each barcode on screen.  The factory is used by the multi-processor to
         // create a separate tracker instance for each barcode.
         BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
-        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay, this);
+        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mViewHolder.mGraphicOverlay, mViewHolder.mScanFrameImageView, this);
         barcodeDetector.setProcessor(new MultiProcessor.Builder<>(barcodeFactory).build());
 
         if (!barcodeDetector.isOperational()) {
@@ -197,8 +203,8 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
     @Override
     protected void onPause() {
         super.onPause();
-        if (mPreview != null) {
-            mPreview.stop();
+        if (mViewHolder.mPreview != null) {
+            mViewHolder.mPreview.stop();
         }
     }
 
@@ -209,8 +215,8 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPreview != null) {
-            mPreview.release();
+        if (mViewHolder.mPreview != null) {
+            mViewHolder.mPreview.release();
         }
     }
 
@@ -277,7 +283,7 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
 
         if (mCameraSource != null) {
             try {
-                mPreview.start(mCameraSource, mGraphicOverlay);
+                mViewHolder.mPreview.start(mCameraSource, mViewHolder.mGraphicOverlay);
             } catch (IOException e) {
                 UMALog.e(TAG, "Unable to start camera source.", e);
                 mCameraSource.release();
@@ -291,9 +297,19 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
 
         UMALog.d("BarcodeCaptureActivity", "onBarcodeFound: " + barcode.displayValue);
 
-        Intent data = new Intent();
-        data.putExtra(BarcodeObject, barcode.displayValue);
-        setResult(CommonStatusCodes.SUCCESS, data);
-        finish();
+        barcodePlace = gson.fromJson(barcode.displayValue, BarcodePlace.class);
+        mViewHolder.mBarcodePlaceTextView.setText(barcodePlace.getName());
+        mViewHolder.mBarcodePlaceDescTextView.setText(barcodePlace.getDescription());
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.barcode_places_button){
+            Intent data = new Intent();
+            data.putExtra(BarcodeObject, barcodePlace.getId());
+            setResult(CommonStatusCodes.SUCCESS, data);
+            finish();
+        }
     }
 }

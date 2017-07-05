@@ -151,7 +151,6 @@ public class DashboardActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // TODO: do something after scanning the QR code
         if (requestCode == BarcodeCaptureActivity.RC_BARCODE_CAPTURE && resultCode == CommonStatusCodes.SUCCESS) {
             PlaceDetailsActivity.startActivity(this, data.getStringExtra(BarcodeCaptureActivity.BarcodeObject));
         }

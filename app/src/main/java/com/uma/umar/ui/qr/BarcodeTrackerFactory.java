@@ -15,6 +15,8 @@
  */
 package com.uma.umar.ui.qr;
 
+import android.view.View;
+
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -28,17 +30,17 @@ class BarcodeTrackerFactory implements MultiProcessor.Factory<Barcode> {
 
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
     private BarcodeGraphicListener mListener;
+    private View mScannerFrame;
 
-    BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> barcodeGraphicOverlay, BarcodeGraphicListener listener) {
+    BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> barcodeGraphicOverlay, View scannerFrame, BarcodeGraphicListener listener) {
         mGraphicOverlay = barcodeGraphicOverlay;
         mListener = listener;
+        mScannerFrame = scannerFrame;
     }
 
     @Override
     public Tracker<Barcode> create(Barcode barcode) {
         BarcodeGraphic graphic = new BarcodeGraphic(mGraphicOverlay);
-        return new BarcodeGraphicTracker(mGraphicOverlay, graphic, mListener);
+        return new BarcodeGraphicTracker(mGraphicOverlay, graphic, mScannerFrame, mListener);
     }
-
 }
-

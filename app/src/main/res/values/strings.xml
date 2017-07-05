@@ -24,6 +24,8 @@
     <string name="read_barcode">Read Barcode</string>
     <string name="auto_focus">Auto Focus</string>
     <string name="use_flash">Use Flash</string>
+    <string name="barcode_no_camera">No camera available. This is needed for reading the QR code..</string>
+    <string name="barcode_ok">OK</string>
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>

@@ -15,6 +15,10 @@
  */
 package com.uma.umar.ui.qr;
 
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.view.View;
+
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -31,11 +35,13 @@ class BarcodeGraphicTracker extends Tracker<Barcode> {
     private GraphicOverlay<BarcodeGraphic> mOverlay;
     private BarcodeGraphic mGraphic;
     private BarcodeGraphicListener mListener;
+    private View mScannerFrame;
 
-    BarcodeGraphicTracker(GraphicOverlay<BarcodeGraphic> overlay, BarcodeGraphic graphic, BarcodeGraphicListener listener) {
+    BarcodeGraphicTracker(GraphicOverlay<BarcodeGraphic> overlay, BarcodeGraphic graphic, View scannerFrame, BarcodeGraphicListener listener) {
         mOverlay = overlay;
         mGraphic = graphic;
         mListener = listener;
+        mScannerFrame = scannerFrame;
     }
 
     /**
@@ -55,7 +61,23 @@ class BarcodeGraphicTracker extends Tracker<Barcode> {
         mGraphic.updateItem(item);
 
         // Callback to send the barcode / QR code to the activity.. when detected
-        mListener.onBarcodeFound(item);
+        if (isBarcodeContainedWithinFrame(item))
+            mListener.onBarcodeFound(item);
+    }
+
+    private boolean isBarcodeContainedWithinFrame(Barcode item) {
+        Rect scannerFrame = new Rect();
+        mScannerFrame.getDrawingRect(scannerFrame);
+
+        RectF rectF = new RectF(item.getBoundingBox());
+        rectF.left = mGraphic.translateX(rectF.left);
+        rectF.top = mGraphic.translateY(rectF.top) + mOverlay.getTop();
+        rectF.right = mGraphic.translateX(rectF.right);
+        rectF.bottom = mGraphic.translateY(rectF.bottom) + mOverlay.getTop();
+
+        Rect barcodeRect = new Rect((int) rectF.left, (int) rectF.top, (int) rectF.right, (int) rectF.bottom);
+
+        return scannerFrame.contains(barcodeRect);
     }
 
     /**
