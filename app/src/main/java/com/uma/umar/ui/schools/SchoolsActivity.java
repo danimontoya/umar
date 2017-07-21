@@ -1,6 +1,9 @@
 package com.uma.umar.ui.schools;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.School;
+import com.uma.umar.ui.dashboard.DashboardActivity;
 import com.uma.umar.ui.profile.ProfileActivity;
 import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.adapter.SchoolViewHolder;
@@ -20,6 +24,7 @@ import com.uma.umar.ui.schools.adapter.SchoolsAdapter;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARSharedPreferences;
 
 public class SchoolsActivity extends BaseActivity implements SchoolsListener {
 
@@ -30,6 +35,11 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
 
     //Getting reference to Firebase Database
     private DatabaseReference mSchoolsRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.SCHOOLS).getRef();
+
+    public static void startActivity(Activity activity) {
+        Intent intent = new Intent(activity, SchoolsActivity.class);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +78,10 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
     public void onItemClick(View view, int position) {
         School school = mAdapter.getItem(position);
         String schoolKey = mAdapter.getRef(position).getKey();
-        Toast.makeText(this, "School: " + school.getName() + ", Key: " + schoolKey, Toast.LENGTH_SHORT).show();
+
+        // Storing the school id, so its not needed to ask for it everytime
+        UmARSharedPreferences.setSchoolId(schoolKey);
+
         UMALog.d("Schools", "School: " + school.getName() + ", Key: " + schoolKey);
         ProfileActivity.startActivity(this, schoolKey);
     }

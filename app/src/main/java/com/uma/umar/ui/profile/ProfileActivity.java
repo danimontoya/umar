@@ -22,6 +22,7 @@ import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARSharedPreferences;
 
 public class ProfileActivity extends BaseActivity implements SchoolsListener {
 
@@ -70,7 +71,10 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
     public void onItemClick(View view, int position) {
         Profile profile = mAdapter.getItem(position);
         String profileKey = mAdapter.getRef(position).getKey();
-        Toast.makeText(this, "Profile: " + profile.getName_en() + ", Key: " + profileKey, Toast.LENGTH_SHORT).show();
+
+        // Storing the school id, so its not needed to ask for it everytime
+        UmARSharedPreferences.setProfileId(profileKey);
+
         UMALog.d("Profile", "Profile: " + profile.getName_en() + ", Key: " + profileKey);
         DashboardActivity.startActivity(this);
     }

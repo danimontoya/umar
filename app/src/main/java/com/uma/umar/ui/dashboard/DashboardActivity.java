@@ -43,6 +43,7 @@ public class DashboardActivity extends BaseActivity
 
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, DashboardActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
     }
