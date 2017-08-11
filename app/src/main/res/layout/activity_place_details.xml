@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/margin_16dp"
-    tools:context="com.uma.umar.ui.place.PlaceDetailsActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_16dp"
+                tools:context="com.uma.umar.ui.place.PlaceDetailsActivity">
 
     <LinearLayout
         android:id="@+id/welcome_layout"
@@ -20,24 +20,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:minHeight="75dp"
-            app:srcCompat="@mipmap/uma_logo" />
+            app:srcCompat="@mipmap/uma_logo"/>
 
         <TextView
             android:id="@+id/welcome_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Place details"
+            android:text="@string/place_details"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
         <TextView
             android:id="@+id/place_name_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Classroom 3.0.1"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            tools:text="Classroom name"/>
 
     </LinearLayout>
 
@@ -48,7 +48,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/augmented_reality_textview"
         android:layout_below="@+id/welcome_layout"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"/>
 
     <TextView
         android:id="@+id/augmented_reality_textview"
@@ -57,8 +57,8 @@
         android:layout_above="@+id/umar_image"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:text="See in augmented reality!!"
-        android:textAppearance="@style/TextAppearance.AppCompat" />
+        android:text="@string/see_in_augmented_reality"
+        android:textAppearance="@style/TextAppearance.AppCompat"/>
 
     <ImageView
         android:id="@+id/umar_image"
@@ -67,6 +67,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        app:srcCompat="@mipmap/augmented_reality" />
+        app:srcCompat="@mipmap/augmented_reality"/>
 
 </RelativeLayout>

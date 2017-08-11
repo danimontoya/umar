@@ -37,4 +37,12 @@ public class UmARSharedPreferences {
     public static String getProfileId() {
         return getSharedPrefs().getString(FirebaseConstants.PROFILE_ID, null);
     }
+
+    public static void setLanguage(String languageCode) {
+        getSharedPrefs().edit().putString(FirebaseConstants.LANGUAGE, languageCode).apply();
+    }
+
+    public static String getLanguage() {
+        return getSharedPrefs().getString(FirebaseConstants.LANGUAGE, null);
+    }
 }

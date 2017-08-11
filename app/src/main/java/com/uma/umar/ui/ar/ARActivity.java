@@ -24,13 +24,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
 
-public class ARActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
+public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener {
 
     public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
     public static final String AR_POINTS = "arPoints";

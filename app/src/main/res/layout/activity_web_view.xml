@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:padding="@dimen/margin_16dp"
-    tools:context="com.uma.umar.ui.category.CategoriesActivity">
+    tools:context="com.uma.umar.ui.webview.WebViewActivity">
 
     <LinearLayout
         android:id="@+id/welcome_layout"
@@ -21,38 +22,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:minHeight="75dp"
-            app:srcCompat="@mipmap/uma_logo" />
+            app:srcCompat="@mipmap/uma_logo"/>
 
         <TextView
             android:id="@+id/welcome_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/list_of_places"
+            android:text="Open Source Licenses"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat"/>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/relative_places"
+    <WebView
+        android:id="@+id/licenses_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/welcome_layout"
-        android:layout_marginTop="20dp">
-
-        <ProgressBar
-            android:id="@+id/progressbar_places"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_places"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
+        android:layout_marginTop="@dimen/margin_16dp"/>
 
 </RelativeLayout>

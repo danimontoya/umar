@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.uma.umar.ui.dashboard.DashboardActivity"
-    tools:showIn="@layout/app_bar_dashboard">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="com.uma.umar.ui.dashboard.DashboardActivity"
+                tools:showIn="@layout/app_bar_dashboard">
 
     <ImageView
         android:id="@+id/dashboard_imageview"
@@ -15,7 +15,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@mipmap/etsiiuma2" />
+        app:srcCompat="@mipmap/etsiiuma2"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/ar_textview"
-                    app:srcCompat="@mipmap/augmented_reality" />
+                    app:srcCompat="@mipmap/augmented_reality"/>
 
                 <TextView
                     android:id="@+id/ar_textview"
@@ -52,8 +52,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="Augmented reality"
-                    android:textSize="14sp" />
+                    android:text="@string/dashboard_ar"
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
 
@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/places_textview"
-                    app:srcCompat="@mipmap/magnifying_glass_lens" />
+                    app:srcCompat="@mipmap/magnifying_glass_lens"/>
 
                 <TextView
                     android:id="@+id/places_textview"
@@ -77,8 +77,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="Know your way around?"
-                    android:textSize="14sp" />
+                    android:text="@string/dashboard_places"
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
         </LinearLayout>
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/qr_textview"
-                    app:srcCompat="@mipmap/qr_icon" />
+                    app:srcCompat="@mipmap/qr_icon"/>
 
                 <TextView
                     android:id="@+id/qr_textview"
@@ -110,8 +110,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="Scan your QR code"
-                    android:textSize="14sp" />
+                    android:text="@string/dashboard_qr"
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
 
@@ -127,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/info_textview"
-                    app:srcCompat="@mipmap/info_icon" />
+                    app:srcCompat="@mipmap/info_icon"/>
 
                 <TextView
                     android:id="@+id/info_textview"
@@ -135,8 +135,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:gravity="center"
-                    android:text="About your School"
-                    android:textSize="14sp" />
+                    android:text="@string/dashboard_info"
+                    android:textSize="14sp"/>
 
             </RelativeLayout>
 

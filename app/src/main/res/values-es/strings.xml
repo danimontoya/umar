@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">UmAR</string>
+
+    <!-- Schools Activity -->
+    <string name="welcome">Bienvenido a la universidad de Málaga</string>
+    <string name="select_school">Por favor, seleccione su Universidad</string>
+
+    <!-- Profile Activity -->
+    <string name="select_profile">Seleccione su perfil</string>
+
+    <!-- Dashboard Activity -->
+    <string name="title_activity_dashboard">Dashboard ES</string>
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+
+    <string name="dashboard_ar">Realidad aumentada</string>
+    <string name="dashboard_places">Te orientas?</string>
+    <string name="dashboard_qr">Escanea tu QR</string>
+    <string name="dashboard_info">Acerca de tu Universidad</string>
+
+
+    <string name="action_settings">Preferencias</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">El acceso a la cámara es necesario para escanear</string>
+    <string name="no_camera_permission">Esta funcionalidad no se puede ejecutar por los permisos.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="barcode_no_camera">No camera available. This is needed for reading the QR code..</string>
+    <string name="barcode_ok">OK</string>
+    <string name="barcode_success">Barcode read successfully</string>
+    <string name="barcode_failure">No barcode captured</string>
+    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+
+    <string name="language_es">Español</string>
+    <string name="language_en">Inglés</string>
+
+    <string name="select_your_favourite_language">Seleccione su lenguaje favorito:</string>
+    <string name="menu_school">Universidad</string>
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_language">Lenguaje</string>
+    <string name="menu_about_this_app">Acerca de esta App</string>
+    <string name="menu_about">Acerca de</string>
+
+    <string name="list_of_places">Lista de lugares</string>
+    <string name="place_details">Detalles del lugar</string>
+    <string name="see_in_augmented_reality">Ver en realidad aumentada!</string>
+
+    <string name="about_description">Descripción</string>
+    <string name="about_location">Localización</string>
+    <string name="about_address">Dirección</string>
+    <string name="about_director">Director</string>
+    <string name="about_email">Email</string>
+    <string name="about_concierge_phone">Conserjería</string>
+    <string name="about_secretary_phone">Secretaría</string>
+
+    <string name="scan_a_valid_qr_code_to_get_the_place_details">Escanea un código QR válido para obtener los detalles del lugar</string>
+
+</resources>

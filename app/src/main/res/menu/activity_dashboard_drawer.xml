@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_school"
+            android:icon="@mipmap/ic_school"
+            android:title="@string/menu_school" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@mipmap/ic_profile"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@mipmap/ic_language"
+            android:title="@string/menu_language" />
+    </group>
+
+    <item android:title="@string/menu_about_this_app">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/ic_about"
+                android:title="@string/menu_about" />
+        </menu>
+    </item>
+
+</menu>

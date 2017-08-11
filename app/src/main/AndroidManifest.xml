@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.uma.umar">
+          package="com.uma.umar">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
-    <uses-feature android:name="android.hardware.camera2" />
+    <uses-feature android:name="android.hardware.camera2"/>
 
     <application
         android:name=".UmARApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionBar">
         <activity android:name=".ui.UmARInitActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.schools.SchoolsActivity" />
-        <activity android:name=".ui.profile.ProfileActivity" />
-        <activity
-            android:name=".ui.dashboard.DashboardActivity"
-            android:label="@string/title_activity_dashboard"
-            android:theme="@style/AppThemeNoActionBar" />
-        <activity android:name=".ui.category.CategoriesActivity" />
-        <activity android:name=".ui.place.PlaceDetailsActivity" />
-        <activity android:name=".ui.ar.ARActivity" />
-        <activity android:name=".ui.qr.BarcodeCaptureActivity" />
+        <activity android:name=".ui.schools.SchoolsActivity"/>
+        <activity android:name=".ui.profile.ProfileActivity"/>
+        <activity android:name=".ui.dashboard.DashboardActivity"
+            android:theme="@style/AppThemeNoActionBar"/>
+        <activity android:name=".ui.category.CategoriesActivity"/>
+        <activity android:name=".ui.place.PlaceDetailsActivity"/>
+        <activity android:name=".ui.ar.ARActivity"/>
+        <activity android:name=".ui.qr.BarcodeCaptureActivity"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -49,9 +46,11 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
 
-        <activity android:name=".ui.about.AboutActivity"></activity>
+        <activity android:name=".ui.about.AboutActivity"/>
+        <activity android:name=".ui.webview.WebViewActivity">
+        </activity>
     </application>
 
 </manifest>

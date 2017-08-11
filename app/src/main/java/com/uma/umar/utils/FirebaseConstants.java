@@ -14,4 +14,6 @@ public class FirebaseConstants {
     public static final String PROFILE_ID = "profileId";
 
     public static final String PLACES = "places";
+
+    public static final String LANGUAGE = "language";
 }

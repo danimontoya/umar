@@ -45,8 +45,6 @@ import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.BarcodePlace;
 import com.uma.umar.ui.qr.camera.CameraSource;
-import com.uma.umar.ui.qr.camera.CameraSourcePreview;
-import com.uma.umar.ui.qr.camera.GraphicOverlay;
 import com.uma.umar.utils.UMALog;
 
 import java.io.IOException;
@@ -311,11 +309,25 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.barcode_places_button){
-            Intent data = new Intent();
-            data.putExtra(BarcodeObject, barcodePlace.getId());
-            setResult(CommonStatusCodes.SUCCESS, data);
-            finish();
+        if (id == R.id.barcode_places_button) {
+
+            if (barcodePlace == null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.app_name);
+                builder.setMessage(R.string.scan_a_valid_qr_code_to_get_the_place_details)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                builder.create().show();
+
+            } else {
+                Intent data = new Intent();
+                data.putExtra(BarcodeObject, barcodePlace.getId());
+                setResult(CommonStatusCodes.SUCCESS, data);
+                finish();
+            }
         }
     }
 }

@@ -20,19 +20,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
+import com.uma.umar.UmARApplication;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.model.Place;
 import com.uma.umar.ui.about.AboutActivity;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.ui.category.CategoriesActivity;
 import com.uma.umar.ui.place.PlaceDetailsActivity;
+import com.uma.umar.ui.profile.ProfileActivity;
 import com.uma.umar.ui.qr.BarcodeCaptureActivity;
+import com.uma.umar.ui.schools.SchoolsActivity;
+import com.uma.umar.ui.webview.WebViewActivity;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.ArrayList;
 
 public class DashboardActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, ValueEventListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, ValueEventListener, LanguageFragment.LanguageListener {
 
     private View mARButton;
     private View mPlacesButton;
@@ -55,6 +60,8 @@ public class DashboardActivity extends BaseActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setTitle(R.string.title_activity_dashboard);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,7 +95,7 @@ public class DashboardActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dashboard_activity2, menu);
+        getMenuInflater().inflate(R.menu.dashboard_activity, menu);
         return true;
     }
 
@@ -113,18 +120,19 @@ public class DashboardActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_school) {
+            SchoolsActivity.startActivity(this);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_profile) {
+            ProfileActivity.startActivity(this, UmARSharedPreferences.getSchoolId());
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_language) {
+            LanguageFragment languageFragment = LanguageFragment.newInstance(UmARSharedPreferences.getLanguage());
+            languageFragment.setListener(this);
+            languageFragment.show(getSupportFragmentManager(), LanguageFragment.TAG);
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_about) {
+            WebViewActivity.startActivity(this);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,5 +180,12 @@ public class DashboardActivity extends BaseActivity
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    @Override
+    public void onLanguageSelected(String langCode) {
+        UmARSharedPreferences.setLanguage(langCode);
+        UmARApplication.getInstance().setLocale();
+        DashboardActivity.startActivity(this);
     }
 }

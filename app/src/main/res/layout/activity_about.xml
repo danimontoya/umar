@@ -70,7 +70,7 @@
                 style="@style/TextDarkBlue15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description" />
+                android:text="@string/about_description" />
 
             <TextView
                 android:id="@+id/description_textview"
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Location" />
+                android:text="@string/about_location" />
 
             <fragment
                 android:id="@+id/map"
@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Address" />
+                android:text="@string/about_address" />
 
             <TextView
                 android:id="@+id/address_textview"
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Director" />
+                android:text="@string/about_director" />
 
             <TextView
                 android:id="@+id/director_textview"
@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Email" />
+                android:text="@string/about_email" />
 
             <TextView
                 android:id="@+id/email_textview"
@@ -144,7 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Concierge Phone" />
+                android:text="@string/about_concierge_phone" />
 
             <TextView
                 android:id="@+id/phone_concierge_textview"
@@ -159,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Secretary Phone" />
+                android:text="@string/about_secretary_phone" />
 
             <TextView
                 android:id="@+id/phone_secretary_textview"
