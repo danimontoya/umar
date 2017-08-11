@@ -16,8 +16,6 @@ import android.opengl.Matrix;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -239,7 +237,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     }
 
     private void updateLatestLocation() {
-        if (arOverlayView != null) {
+        if (arOverlayView != null && location != null) {
             arOverlayView.updateCurrentLocation(location);
             tvCurrentLocation.setText(String.format("lat: %s \nlon: %s \naltitude: %s \n",
                     location.getLatitude(), location.getLongitude(), location.getAltitude()));
