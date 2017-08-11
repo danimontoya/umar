@@ -33,7 +33,7 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
     }
 
     public void bind(Place place) {
-        mName.setText(place.getName_en());
+        mName.setText(place.getName());
         StringBuilder builder = new StringBuilder("[");
         builder.append(place.getLatitude());
         builder.append(", ");

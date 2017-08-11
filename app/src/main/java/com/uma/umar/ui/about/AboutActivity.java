@@ -22,10 +22,16 @@ import com.uma.umar.R;
 import com.uma.umar.model.School;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
+import com.uma.umar.utils.UmARSharedPreferences;
 
 public class AboutActivity extends BaseActivity implements OnMapReadyCallback, ValueEventListener {
 
     public static void startActivity(Activity activity) {
+        if (!UmARNetworkUtil.isNetworkAvailable()) {
+            ((BaseActivity) activity).showDialogNoInternet();
+            return;
+        }
         Intent intent = new Intent(activity, AboutActivity.class);
         activity.startActivity(intent);
     }
@@ -45,8 +51,14 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.SCHOOLS).child("-Ko2pDlg9EtFohSAxkJv").getRef();
+        mRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.SCHOOLS).child(UmARSharedPreferences.getSchoolId()).getRef();
         mRef.addValueEventListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRef.removeEventListener(this);
     }
 
     @Override
@@ -57,8 +69,12 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         mSchool = dataSnapshot.getValue(School.class);
+        if (mSchool == null) {
+            showDialogInformationException();
+            return;
+        }
         mViewHolder.nameTextView.setText(mSchool.getName());
-        mViewHolder.descriptionTextView.setText(mSchool.getDescription_en());
+        mViewHolder.descriptionTextView.setText(mSchool.getDescription());
 
         // Add a marker and move the camera
         LatLng latLng = new LatLng(mSchool.getLatitude(), mSchool.getLongitude());

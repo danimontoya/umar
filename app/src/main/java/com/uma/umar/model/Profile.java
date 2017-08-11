@@ -1,6 +1,7 @@
 package com.uma.umar.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.uma.umar.UmARApplication;
 
 /**
  * Created by danieh on 6/27/17.
@@ -40,5 +41,9 @@ public class Profile {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getName() {
+        return UmARApplication.isEnglish() ? getName_en() : getName_es();
     }
 }

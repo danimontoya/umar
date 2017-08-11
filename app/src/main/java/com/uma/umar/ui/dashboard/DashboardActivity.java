@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,6 +31,7 @@ import com.uma.umar.ui.qr.BarcodeCaptureActivity;
 import com.uma.umar.ui.schools.SchoolsActivity;
 import com.uma.umar.ui.webview.WebViewActivity;
 import com.uma.umar.utils.FirebaseConstants;
+import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.ArrayList;
@@ -45,6 +45,7 @@ public class DashboardActivity extends BaseActivity
     private View mInfoButton;
 
     private DatabaseReference mPlacesRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).getRef();
+    private boolean clickedARButton = false;
 
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, DashboardActivity.class);
@@ -80,6 +81,12 @@ public class DashboardActivity extends BaseActivity
         mQRButton.setOnClickListener(this);
         mInfoButton = findViewById(R.id.info_button);
         mInfoButton.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPlacesRef.removeEventListener(this);
     }
 
     @Override
@@ -122,7 +129,12 @@ public class DashboardActivity extends BaseActivity
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.ar_button) {
+            if (clickedARButton) {
+                showDialogNoInternet();
+                return;
+            }
             mPlacesRef.addValueEventListener(this);
+            clickedARButton = true;
 
         } else if (id == R.id.places_button) {
             CategoriesActivity.startActivity(this);
@@ -145,10 +157,16 @@ public class DashboardActivity extends BaseActivity
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
+        clickedARButton = false;
         ArrayList<ARPoint> arPoints = new ArrayList<>();
-        for (DataSnapshot placeSnapshot : dataSnapshot.getChildren()) {
+        Iterable<DataSnapshot> dataSnapshotChildren = dataSnapshot.getChildren();
+        if (dataSnapshotChildren == null) {
+            showDialogInformationException();
+            return;
+        }
+        for (DataSnapshot placeSnapshot : dataSnapshotChildren) {
             Place place = placeSnapshot.getValue(Place.class);
-            ARPoint arPoint = new ARPoint(place.getName_en(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
+            ARPoint arPoint = new ARPoint(place.getName(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
             // TODO: 7/4/17 Picasso get bitmap here?
             arPoints.add(arPoint);
         }
@@ -157,7 +175,7 @@ public class DashboardActivity extends BaseActivity
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
-
+        UMALog.d("Places", "onCancelled: " + databaseError.getMessage());
     }
 
     @Override

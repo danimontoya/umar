@@ -26,6 +26,7 @@ import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,10 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private LocationManager locationManager;
 
     public static void startActivity(Activity activity, ArrayList<ARPoint> arPoints) {
+        if (arPoints == null || !UmARNetworkUtil.isNetworkAvailable()) {
+            ((BaseActivity) activity).showDialogNoInternet();
+            return;
+        }
         Intent intent = new Intent(activity, ARActivity.class);
         intent.putParcelableArrayListExtra(AR_POINTS, arPoints);
         activity.startActivity(intent);

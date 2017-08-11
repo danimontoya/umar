@@ -1,6 +1,9 @@
 package com.uma.umar.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.uma.umar.UmARApplication;
+import com.uma.umar.ui.dashboard.LanguageFragment;
+import com.uma.umar.utils.FirebaseConstants;
 
 import java.io.Serializable;
 import java.util.List;
@@ -133,5 +136,9 @@ public class School implements Serializable {
 
     public void setImages(List<ImageUrl> images) {
         this.images = images;
+    }
+
+    public String getDescription() {
+        return UmARApplication.isEnglish() ? getDescription_en() : getDescription_es();
     }
 }

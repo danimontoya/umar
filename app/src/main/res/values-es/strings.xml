@@ -56,4 +56,7 @@
 
     <string name="scan_a_valid_qr_code_to_get_the_place_details">Escanea un código QR válido para obtener los detalles del lugar</string>
 
+    <string name="information_exception">Lo sentimos, la información del servidor ha sido modificada. La aplicación necesita reiniciarse para seleccionar de nuevo su Universidad.</string>
+    <string name="need_internet">Lo sentimos, necesita internet para usar esta funcionalidad.</string>
+
 </resources>

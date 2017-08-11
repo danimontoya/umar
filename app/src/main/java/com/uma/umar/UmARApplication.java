@@ -8,8 +8,9 @@ import android.content.res.Resources;
 import android.os.Build;
 
 import com.google.firebase.FirebaseApp;
-import com.uma.umar.ui.dashboard.LanguageFragment;
+import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.Locale;
@@ -29,13 +30,14 @@ public class UmARApplication extends Application {
         mInstance = this;
 
         UMALog.setLoggingEnabled(BuildConfig.DEBUG);
+        UmARNetworkUtil.init(this);
         FirebaseApp.initializeApp(this);
 
         String language = Locale.getDefault().getLanguage();
 
         // The first time there is nothing in the shared preferences
         if (UmARSharedPreferences.getLanguage() == null) {
-            UmARSharedPreferences.setLanguage(LanguageFragment.ES);
+            UmARSharedPreferences.setLanguage(FirebaseConstants.LANGUAGE_EN);
         }
         setLocale();
 
@@ -89,5 +91,9 @@ public class UmARApplication extends Application {
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+    }
+
+    public static boolean isEnglish(){
+        return FirebaseConstants.LANGUAGE_EN.equals(UmARApplication.getInstance().getLocale().getLanguage());
     }
 }

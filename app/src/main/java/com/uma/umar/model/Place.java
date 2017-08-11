@@ -1,6 +1,7 @@
 package com.uma.umar.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.uma.umar.UmARApplication;
 
 /**
  * Created by danieh on 6/29/17.
@@ -80,5 +81,9 @@ public class Place {
 
     public void setFloor(int floor) {
         this.floor = floor;
+    }
+
+    public String getName() {
+        return UmARApplication.isEnglish() ? getName_en() : getName_es();
     }
 }

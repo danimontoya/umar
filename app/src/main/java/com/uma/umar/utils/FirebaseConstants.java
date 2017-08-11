@@ -16,4 +16,6 @@ public class FirebaseConstants {
     public static final String PLACES = "places";
 
     public static final String LANGUAGE = "language";
+    public static final String LANGUAGE_ES = "es";
+    public static final String LANGUAGE_EN = "en";
 }

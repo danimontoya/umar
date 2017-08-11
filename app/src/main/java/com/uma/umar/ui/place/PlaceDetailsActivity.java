@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ import com.uma.umar.model.Place;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
 
 import java.util.ArrayList;
 
@@ -46,6 +46,10 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     private Place mPlace;
 
     public static void startActivity(Activity activity, String placeKey) {
+        if (!UmARNetworkUtil.isNetworkAvailable()) {
+            ((BaseActivity) activity).showDialogNoInternet();
+            return;
+        }
         Intent intent = new Intent(activity, PlaceDetailsActivity.class);
         intent.putExtra(PLACE_KEY, placeKey);
         activity.startActivity(intent);
@@ -67,7 +71,18 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
 
         mPlaceKey = getIntent().getStringExtra(PLACE_KEY);
         mPlaceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).child(mPlaceKey).getRef();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPlaceRef.addValueEventListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPlaceRef.removeEventListener(this);
     }
 
     /**
@@ -87,13 +102,17 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         mPlace = dataSnapshot.getValue(Place.class);
-        UMALog.d("Place", "Place: name=" + mPlace.getName_en());
+        if (mPlace == null) {
+            showDialogInformationException();
+            return;
+        }
+        UMALog.d("Place", "Place: name=" + mPlace.getName());
 
-        mPlaceNameTextView.setText(mPlace.getName_en());
+        mPlaceNameTextView.setText(mPlace.getName());
 
         // Add a marker and move the camera
         LatLng latLng = new LatLng(mPlace.getLatitude(), mPlace.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(latLng).title(mPlace.getName_en()).icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker)));
+        mMap.addMarker(new MarkerOptions().position(latLng).title(mPlace.getName()).icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -112,7 +131,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.umar_image) {
-            ARPoint arPoint = new ARPoint(mPlace.getName_en(), mPlace.getImage(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
+            ARPoint arPoint = new ARPoint(mPlace.getName(), mPlace.getImage(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
             ArrayList<ARPoint> arPoints = new ArrayList<>();
             arPoints.add(arPoint);
             ARActivity.startActivity(this, arPoints);

@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.uma.umar.R;
+import com.uma.umar.utils.FirebaseConstants;
 
 /**
  * Created by danieh on 8/10/17.
@@ -19,8 +20,6 @@ import com.uma.umar.R;
 public class LanguageFragment extends AppCompatDialogFragment implements RadioGroup.OnCheckedChangeListener {
 
     public static final String TAG = "LanguageFragment";
-    public static final String ES = "es";
-    public static final String EN = "en";
 
     private static final String LANG_CODE = "langCode";
     private String mLangCode;
@@ -56,8 +55,8 @@ public class LanguageFragment extends AppCompatDialogFragment implements RadioGr
         super.onViewCreated(view, savedInstanceState);
 
         mLangCode = getArguments().getString(LANG_CODE);
-        mRadioSpanish.setChecked(ES.equals(mLangCode));
-        mRadioEnglish.setChecked(EN.equals(mLangCode));
+        mRadioSpanish.setChecked(FirebaseConstants.LANGUAGE_ES.equals(mLangCode));
+        mRadioEnglish.setChecked(FirebaseConstants.LANGUAGE_EN.equals(mLangCode));
         mRadioGroup.setOnCheckedChangeListener(this);
     }
 
@@ -70,9 +69,9 @@ public class LanguageFragment extends AppCompatDialogFragment implements RadioGr
         dismiss();
         if (mListener != null) {
             if (i == mRadioSpanish.getId()) {
-                mListener.onLanguageSelected(ES);
+                mListener.onLanguageSelected(FirebaseConstants.LANGUAGE_ES);
             } else {
-                mListener.onLanguageSelected(EN);
+                mListener.onLanguageSelected(FirebaseConstants.LANGUAGE_EN);
             }
         }
     }

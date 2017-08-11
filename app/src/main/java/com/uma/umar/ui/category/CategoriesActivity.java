@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -22,6 +21,7 @@ import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
 
 public class CategoriesActivity extends BaseActivity implements SchoolsListener {
 
@@ -32,6 +32,10 @@ public class CategoriesActivity extends BaseActivity implements SchoolsListener 
     private PlaceAdapter mAdapter;
 
     public static void startActivity(Activity activity) {
+        if (!UmARNetworkUtil.isNetworkAvailable()) {
+            ((BaseActivity) activity).showDialogNoInternet();
+            return;
+        }
         Intent intent = new Intent(activity, CategoriesActivity.class);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
@@ -67,9 +71,17 @@ public class CategoriesActivity extends BaseActivity implements SchoolsListener 
     public void onItemClick(View view, int position) {
         Place place = mAdapter.getItem(position);
         String placeKey = mAdapter.getRef(position).getKey();
-        Toast.makeText(this, "Place: " + place.getName_en() + ", Key: " + placeKey, Toast.LENGTH_SHORT).show();
-        UMALog.d("Place", "Place: " + place.getName_en() + ", Key: " + placeKey);
+        Toast.makeText(this, "Place: " + place.getName() + ", Key: " + placeKey, Toast.LENGTH_SHORT).show();
+        UMALog.d("Place", "Place: " + place.getName() + ", Key: " + placeKey);
         PlaceDetailsActivity.startActivity(this, placeKey);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAdapter != null) {
+            mAdapter.cleanup();
+        }
     }
 
     @Override

@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,6 +20,7 @@ import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
 public class ProfileActivity extends BaseActivity implements SchoolsListener {
@@ -34,6 +33,10 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
     private ProfileAdapter mAdapter;
 
     public static void startActivity(Activity activity, String schoolId) {
+        if (!UmARNetworkUtil.isNetworkAvailable()) {
+            ((BaseActivity) activity).showDialogNoInternet();
+            return;
+        }
         Intent intent = new Intent(activity, ProfileActivity.class);
         intent.putExtra(FirebaseConstants.SCHOOL_ID, schoolId);
         activity.startActivity(intent);
@@ -65,6 +68,17 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
     @Override
     public void onDataChanged() {
         mProgressBar.setVisibility(View.GONE);
+        if (mAdapter.getItemCount() == 0) {
+            showDialogInformationException();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAdapter != null) {
+            mAdapter.cleanup();
+        }
     }
 
     @Override
@@ -75,7 +89,7 @@ public class ProfileActivity extends BaseActivity implements SchoolsListener {
         // Storing the school id, so its not needed to ask for it everytime
         UmARSharedPreferences.setProfileId(profileKey);
 
-        UMALog.d("Profile", "Profile: " + profile.getName_en() + ", Key: " + profileKey);
+        UMALog.d("Profile", "Profile: " + profile.getName() + ", Key: " + profileKey);
         DashboardActivity.startActivity(this);
     }
 

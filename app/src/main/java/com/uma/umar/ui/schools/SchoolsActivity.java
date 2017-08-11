@@ -24,6 +24,7 @@ import com.uma.umar.ui.schools.adapter.SchoolsAdapter;
 import com.uma.umar.ui.schools.listener.SchoolsListener;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
 public class SchoolsActivity extends BaseActivity implements SchoolsListener {
@@ -37,6 +38,10 @@ public class SchoolsActivity extends BaseActivity implements SchoolsListener {
     private DatabaseReference mSchoolsRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.SCHOOLS).getRef();
 
     public static void startActivity(Activity activity) {
+        if (!UmARNetworkUtil.isNetworkAvailable()) {
+            ((BaseActivity) activity).showDialogNoInternet();
+            return;
+        }
         Intent intent = new Intent(activity, SchoolsActivity.class);
         activity.startActivity(intent);
     }

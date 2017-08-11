@@ -31,7 +31,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
     }
 
     public void bind(Profile profile) {
-        mName.setText(profile.getName_en());
+        mName.setText(profile.getName());
         Picasso.with(mImage.getContext()).load(profile.getImage()).into(mImage);
     }
 
