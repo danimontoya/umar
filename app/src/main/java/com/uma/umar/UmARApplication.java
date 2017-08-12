@@ -37,10 +37,9 @@ public class UmARApplication extends Application {
 
         // The first time there is nothing in the shared preferences
         if (UmARSharedPreferences.getLanguage() == null) {
-            UmARSharedPreferences.setLanguage(FirebaseConstants.LANGUAGE_EN);
+            UmARSharedPreferences.setLanguage(FirebaseConstants.LANGUAGE_ES);
         }
         setLocale();
-
 
         UMALog.e("language", "Language Phone: " + language);
         UMALog.e("language", "Language App  : " + UmARSharedPreferences.getLanguage());
@@ -93,7 +92,7 @@ public class UmARApplication extends Application {
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 
-    public static boolean isEnglish(){
+    public static boolean isEnglish() {
         return FirebaseConstants.LANGUAGE_EN.equals(UmARApplication.getInstance().getLocale().getLanguage());
     }
 }

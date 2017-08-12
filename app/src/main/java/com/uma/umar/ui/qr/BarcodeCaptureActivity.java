@@ -302,8 +302,13 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
         UMALog.d("BarcodeCaptureActivity", "onBarcodeFound: " + barcode.displayValue);
 
         barcodePlace = gson.fromJson(barcode.displayValue, BarcodePlace.class);
-        mViewHolder.mBarcodePlaceTextView.setText(barcodePlace.getName());
-        mViewHolder.mBarcodePlaceDescTextView.setText(barcodePlace.getDescription());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mViewHolder.mBarcodePlaceTextView.setText(barcodePlace.getName());
+                mViewHolder.mBarcodePlaceDescTextView.setText(barcodePlace.getDescription());
+            }
+        });
     }
 
     @Override

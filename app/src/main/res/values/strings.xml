@@ -59,4 +59,6 @@
     <string name="information_exception">Sorry, server information has changed. Application should restart in order to select again your School.</string>
     <string name="need_internet">Sorry, you need internet for using this feature.</string>
 
+    <string name="barcode_place_found">Place details:</string>
+
 </resources>

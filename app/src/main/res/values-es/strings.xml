@@ -59,4 +59,6 @@
     <string name="information_exception">Lo sentimos, la información del servidor ha sido modificada. La aplicación necesita reiniciarse para seleccionar de nuevo su Universidad.</string>
     <string name="need_internet">Lo sentimos, necesita internet para usar esta funcionalidad.</string>
 
+    <string name="barcode_place_found">Detalles del lugar:</string>
+
 </resources>
