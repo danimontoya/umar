@@ -24,8 +24,8 @@ import com.uma.umar.model.ARPoint;
 import com.uma.umar.model.Place;
 import com.uma.umar.ui.about.AboutActivity;
 import com.uma.umar.ui.ar.ARActivity;
-import com.uma.umar.ui.category.CategoriesActivity;
 import com.uma.umar.ui.place.PlaceDetailsActivity;
+import com.uma.umar.ui.place.PlacesActivity;
 import com.uma.umar.ui.profile.ProfileActivity;
 import com.uma.umar.ui.qr.BarcodeCaptureActivity;
 import com.uma.umar.ui.schools.SchoolsActivity;
@@ -44,7 +44,7 @@ public class DashboardActivity extends BaseActivity
     private View mQRButton;
     private View mInfoButton;
 
-    private DatabaseReference mPlacesRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).getRef();
+    private DatabaseReference mPlacesRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).child(UmARSharedPreferences.getSchoolId()).getRef();
     private boolean clickedARButton = false;
 
     public static void startActivity(Activity activity) {
@@ -137,7 +137,7 @@ public class DashboardActivity extends BaseActivity
             clickedARButton = true;
 
         } else if (id == R.id.places_button) {
-            CategoriesActivity.startActivity(this);
+            PlacesActivity.startActivity(this);
 
         } else if (id == R.id.qr_button) {
             BarcodeCaptureActivity.startActivity(this);
@@ -164,12 +164,17 @@ public class DashboardActivity extends BaseActivity
             showDialogInformationException();
             return;
         }
+
+        String profileSelectedId = UmARSharedPreferences.getProfileId();
         for (DataSnapshot placeSnapshot : dataSnapshotChildren) {
             Place place = placeSnapshot.getValue(Place.class);
-            ARPoint arPoint = new ARPoint(place.getName(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
-            // TODO: 7/4/17 Picasso get bitmap here?
-            arPoints.add(arPoint);
+            if (place != null && place.getProfiles().containsValue(profileSelectedId)) {
+                ARPoint arPoint = new ARPoint(place.getName(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
+                // TODO: 7/4/17 Picasso get bitmap here?
+                arPoints.add(arPoint);
+            }
         }
+
         ARActivity.startActivity(this, arPoints);
     }
 

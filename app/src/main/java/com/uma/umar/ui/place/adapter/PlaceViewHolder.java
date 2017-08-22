@@ -1,4 +1,4 @@
-package com.uma.umar.ui.category.adapter;
+package com.uma.umar.ui.place.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.uma.umar.R;
 import com.uma.umar.model.Place;
+import com.uma.umar.ui.place.listener.PlaceClickListener;
 import com.uma.umar.ui.schools.listener.SchoolClickListener;
 
 /**
@@ -21,7 +22,7 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private final TextView mLocation;
     private final View mView;
 
-    private SchoolClickListener mListener;
+    private PlaceClickListener mListener;
 
     public PlaceViewHolder(View itemView) {
         super(itemView);
@@ -45,7 +46,7 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
         Picasso.with(mImage.getContext()).load(place.getImage()).into(mImage);
     }
 
-    public void setOnClickListener(SchoolClickListener listener) {
+    public void setOnClickListener(PlaceClickListener listener) {
         mListener = listener;
     }
 

@@ -30,6 +30,7 @@ import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
+import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.ArrayList;
 
@@ -70,13 +71,13 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
 
         mPlaceKey = getIntent().getStringExtra(PLACE_KEY);
-        mPlaceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).child(mPlaceKey).getRef();
+        mPlaceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).child(UmARSharedPreferences.getSchoolId()).child(mPlaceKey).getRef();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPlaceRef.addValueEventListener(this);
+        mPlaceRef.addListenerForSingleValueEvent(this);
     }
 
     @Override
@@ -136,17 +137,5 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
             arPoints.add(arPoint);
             ARActivity.startActivity(this, arPoints);
         }
-    }
-
-    private void dialogNotDoneYet() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("UmAR");
-        builder.setMessage("Eeee no soy tan rapido.. esto esta en proceso aun.. Waait for it! ;)")
-                .setPositiveButton("Vale hijoooo..! I'll waaait!", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create().show();
     }
 }

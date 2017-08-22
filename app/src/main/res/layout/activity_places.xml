@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:padding="@dimen/margin_16dp"
-    tools:context="com.uma.umar.ui.category.CategoriesActivity">
+    tools:context="com.uma.umar.ui.place.PlacesActivity">
 
     <LinearLayout
         android:id="@+id/welcome_layout"

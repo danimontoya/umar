@@ -3,6 +3,8 @@ package com.uma.umar.model;
 import com.google.gson.annotations.SerializedName;
 import com.uma.umar.UmARApplication;
 
+import java.util.HashMap;
+
 /**
  * Created by danieh on 6/29/17.
  */
@@ -23,6 +25,8 @@ public class Place {
     private double altitude;
     @SerializedName("floor")
     private int floor;
+    @SerializedName("profiles")
+    private HashMap<String, String> profiles;
 
     public Place() {
     }
@@ -85,5 +89,13 @@ public class Place {
 
     public String getName() {
         return UmARApplication.isEnglish() ? getName_en() : getName_es();
+    }
+
+    public HashMap<String, String> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(HashMap<String, String> profiles) {
+        this.profiles = profiles;
     }
 }

@@ -31,7 +31,7 @@
         <activity android:name=".ui.profile.ProfileActivity"/>
         <activity android:name=".ui.dashboard.DashboardActivity"
             android:theme="@style/AppThemeNoActionBar"/>
-        <activity android:name=".ui.category.CategoriesActivity"/>
+        <activity android:name=".ui.place.PlacesActivity"/>
         <activity android:name=".ui.place.PlaceDetailsActivity"/>
         <activity android:name=".ui.ar.ARActivity"/>
         <activity android:name=".ui.qr.BarcodeCaptureActivity"
