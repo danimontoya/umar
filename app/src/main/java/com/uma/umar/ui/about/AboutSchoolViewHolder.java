@@ -9,7 +9,7 @@ import com.uma.umar.R;
  * Created by danieh on 7/2/17.
  */
 
-public class SchoolViewHolder {
+public class AboutSchoolViewHolder {
 
     View root;
     TextView nameTextView;
@@ -20,7 +20,7 @@ public class SchoolViewHolder {
     TextView phoneConciergeTextView;
     TextView phoneSecretaryTextView;
 
-    public SchoolViewHolder(View view) {
+    public AboutSchoolViewHolder(View view) {
         this.root = view;
         nameTextView = (TextView) view.findViewById(R.id.school_name_textview);
         descriptionTextView = (TextView) view.findViewById(R.id.description_textview);

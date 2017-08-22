@@ -2,7 +2,9 @@ package com.uma.umar.ui.about;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,7 +27,7 @@ import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
-public class AboutActivity extends BaseActivity implements OnMapReadyCallback, ValueEventListener {
+public class AboutActivity extends BaseActivity implements OnMapReadyCallback, ValueEventListener, View.OnClickListener {
 
     public static void startActivity(Activity activity) {
         if (!UmARNetworkUtil.isNetworkAvailable()) {
@@ -37,7 +39,7 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
     }
 
     private School mSchool;
-    private SchoolViewHolder mViewHolder;
+    private AboutSchoolViewHolder mViewHolder;
     private GoogleMap mMap;
     private DatabaseReference mRef;
 
@@ -46,7 +48,7 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        mViewHolder = new SchoolViewHolder(findViewById(R.id.root));
+        mViewHolder = new AboutSchoolViewHolder(findViewById(R.id.root));
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -92,10 +94,28 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
         mViewHolder.emailTextView.setText(mSchool.getEmail());
         mViewHolder.phoneConciergeTextView.setText(mSchool.getPhone_concierge());
         mViewHolder.phoneSecretaryTextView.setText(mSchool.getPhone_secretary());
+
+        mViewHolder.phoneConciergeTextView.setOnClickListener(this);
+        mViewHolder.phoneSecretaryTextView.setOnClickListener(this);
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
         UMALog.d("School", "School: databaseError=" + databaseError);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == mViewHolder.phoneConciergeTextView.getId()) {
+            dialPhone(mSchool.getPhone_concierge());
+        } else if (id == mViewHolder.phoneSecretaryTextView.getId()) {
+            dialPhone(mSchool.getPhone_secretary());
+        }
+    }
+
+    private void dialPhone(String phone) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        startActivity(callIntent);
     }
 }
