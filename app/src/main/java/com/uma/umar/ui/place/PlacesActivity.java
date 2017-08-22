@@ -91,7 +91,7 @@ public class PlacesActivity extends BaseActivity implements ValueEventListener, 
         mPlacesMap = new LinkedHashMap<>();
         for (DataSnapshot placeDataSnapshot : dataSnapshot.getChildren()) {
             Place place = placeDataSnapshot.getValue(Place.class);
-            if (place.getProfiles().containsValue(profileSelectedId)) {
+            if (place != null && place.getProfiles().containsValue(profileSelectedId)) {
                 String placeId = placeDataSnapshot.getKey();
                 mPlacesMap.put(placeId, place);
                 UMALog.d("Places", "Place name=" + place.getName());

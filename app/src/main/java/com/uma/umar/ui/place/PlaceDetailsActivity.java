@@ -1,10 +1,8 @@
 package com.uma.umar.ui.place;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,11 +37,9 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     public static final String PLACE_KEY = "placeKey";
 
     private TextView mPlaceNameTextView;
-    private ImageView mAugmentedRealityImageView;
 
     private GoogleMap mMap;
     private DatabaseReference mPlaceRef;
-    private String mPlaceKey;
     private Place mPlace;
 
     public static void startActivity(Activity activity, String placeKey) {
@@ -63,14 +59,14 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
         setContentView(R.layout.activity_place_details);
 
         mPlaceNameTextView = (TextView) findViewById(R.id.place_name_textview);
-        mAugmentedRealityImageView = (ImageView) findViewById(R.id.umar_image);
+        ImageView mAugmentedRealityImageView = (ImageView) findViewById(R.id.umar_image);
         mAugmentedRealityImageView.setOnClickListener(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        mPlaceKey = getIntent().getStringExtra(PLACE_KEY);
+        String mPlaceKey = getIntent().getStringExtra(PLACE_KEY);
         mPlaceRef = FirebaseDatabase.getInstance().getReference().child(FirebaseConstants.PLACES).child(UmARSharedPreferences.getSchoolId()).child(mPlaceKey).getRef();
     }
 
