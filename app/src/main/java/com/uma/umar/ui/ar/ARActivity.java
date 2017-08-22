@@ -244,8 +244,8 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private void updateLatestLocation() {
         if (arOverlayView != null && location != null) {
             arOverlayView.updateCurrentLocation(location);
-            tvCurrentLocation.setText(String.format("lat: %s \nlon: %s \naltitude: %s \n",
-                    location.getLatitude(), location.getLongitude(), location.getAltitude()));
+            tvCurrentLocation.setText(getString(R.string.lat_lon_alt,
+                    String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), String.valueOf(location.getAltitude())));
         }
     }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_ar"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ar.ARActivity">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/activity_ar"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".ui.ar.ARActivity">
 
     <FrameLayout
         android:id="@+id/camera_container_layout"
@@ -14,14 +15,42 @@
         <SurfaceView
             android:id="@+id/surface_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/tv_current_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="GPS is loading..."
-        android:textColor="@android:color/white" />
+    <RelativeLayout
+        android:id="@+id/location_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_current_location"
+            android:background="#77FFFFFF"/>
+
+        <ImageView
+            android:id="@+id/uma_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:alpha=".9"
+            android:minHeight="75dp"
+            app:srcCompat="@mipmap/uma_logo"/>
+
+        <TextView
+            android:id="@+id/tv_current_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uma_logo"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="@dimen/margin_16dp"
+            android:text="@string/gps_is_loading"/>
+    </RelativeLayout>
+
 </FrameLayout>

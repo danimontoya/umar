@@ -62,5 +62,7 @@
     <string name="barcode_place_found">Place details:</string>
     <string name="universidad_de_malaga">Universidad de Málaga</string>
     <string name="email_informatica">director@informatica.uma.es</string>
+    <string name="lat_lon_alt">Current Location: \nLatitude: %1$s  \nLongitude: %2$s  \nAltitude: %3$s</string>
+    <string name="gps_is_loading">GPS is loading...</string>
 
 </resources>
