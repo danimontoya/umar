@@ -60,5 +60,7 @@
     <string name="need_internet">Lo sentimos, necesita internet para usar esta funcionalidad.</string>
 
     <string name="barcode_place_found">Detalles del lugar:</string>
+    <string name="universidad_de_malaga">Universidad de Málaga</string>
+    <string name="email_informatica">director@informatica.uma.es</string>
 
 </resources>
