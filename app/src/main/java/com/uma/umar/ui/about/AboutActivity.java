@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -91,9 +93,12 @@ public class AboutActivity extends BaseActivity implements OnMapReadyCallback, V
 
         mViewHolder.addressTextView.setText(mSchool.getAddress());
         mViewHolder.directorTextView.setText(mSchool.getDirector());
-        mViewHolder.emailTextView.setText(mSchool.getEmail());
-        mViewHolder.phoneConciergeTextView.setText(mSchool.getPhone_concierge());
-        mViewHolder.phoneSecretaryTextView.setText(mSchool.getPhone_secretary());
+
+        mViewHolder.emailTextView.setText(Html.fromHtml("<a href=\"mailto:" + mSchool.getEmail() + "\">" + mSchool.getEmail() + "</a>"));
+        mViewHolder.emailTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        mViewHolder.phoneConciergeTextView.setText(Html.fromHtml("<u>" + mSchool.getPhone_concierge() + "</u>"));
+        mViewHolder.phoneSecretaryTextView.setText(Html.fromHtml("<u>" + mSchool.getPhone_secretary() + "</u>"));
 
         mViewHolder.phoneConciergeTextView.setOnClickListener(this);
         mViewHolder.phoneSecretaryTextView.setOnClickListener(this);
