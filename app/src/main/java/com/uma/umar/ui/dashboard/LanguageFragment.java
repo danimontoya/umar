@@ -22,7 +22,6 @@ public class LanguageFragment extends AppCompatDialogFragment implements RadioGr
     public static final String TAG = "LanguageFragment";
 
     private static final String LANG_CODE = "langCode";
-    private String mLangCode;
 
     private RadioGroup mRadioGroup;
     private RadioButton mRadioSpanish;
@@ -54,7 +53,7 @@ public class LanguageFragment extends AppCompatDialogFragment implements RadioGr
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mLangCode = getArguments().getString(LANG_CODE);
+        String mLangCode = getArguments().getString(LANG_CODE);
         mRadioSpanish.setChecked(FirebaseConstants.LANGUAGE_ES.equals(mLangCode));
         mRadioEnglish.setChecked(FirebaseConstants.LANGUAGE_EN.equals(mLangCode));
         mRadioGroup.setOnCheckedChangeListener(this);

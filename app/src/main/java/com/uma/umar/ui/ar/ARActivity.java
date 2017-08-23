@@ -17,20 +17,25 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
+import com.uma.umar.ui.ar.listener.ArrowsListener;
 import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
 
 import java.util.ArrayList;
 
-public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener {
+public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener, ArrowsListener {
 
     public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
     public static final String AR_POINTS = "arPoints";
@@ -55,6 +60,11 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private SensorManager sensorManager;
     private LocationManager locationManager;
 
+    private ImageView mArrowLeft;
+    private ImageView mArrowRight;
+    private Animation mShakeAnimationLeft;
+    private Animation mShakeAnimationRight;
+
     public static void startActivity(Activity activity, ArrayList<ARPoint> arPoints) {
         if (arPoints == null || !UmARNetworkUtil.isNetworkAvailable()) {
             ((BaseActivity) activity).showDialogNoInternet();
@@ -76,9 +86,18 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         tvCurrentLocation = (TextView) findViewById(R.id.tv_current_location);
 
+        mArrowLeft = (ImageView) findViewById(R.id.arrow_left);
+        mArrowRight = (ImageView) findViewById(R.id.arrow_right);
+
+        mShakeAnimationLeft = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        mShakeAnimationRight = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        mArrowLeft.startAnimation(mShakeAnimationLeft);
+        mArrowRight.startAnimation(mShakeAnimationRight);
+
         ArrayList<ARPoint> arPoints = getIntent().getParcelableArrayListExtra(AR_POINTS);
-        arOverlayView = new AROverlayView(this, arPoints);
+        arOverlayView = new AROverlayView(getApplicationContext(), arPoints, this);
     }
+
 
     @Override
     public void onResume() {
@@ -266,6 +285,32 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
 
     @Override
     public void onProviderDisabled(String s) {
+
+    }
+
+    @Override
+    public void shouldBeVisibleAnyArrow(boolean arrowLeft, boolean arrowRight) {
+
+        UMALog.d(TAG, "arrowLeft=" + arrowLeft + ", " + "arrowRight=" + arrowRight);
+        if (!arrowLeft && mShakeAnimationLeft.hasStarted()) {
+            mArrowLeft.clearAnimation();
+            mArrowLeft.setVisibility(View.GONE);
+        }
+
+        if (!arrowRight && mShakeAnimationRight.hasStarted()) {
+            mArrowRight.clearAnimation();
+            mArrowRight.setVisibility(View.GONE);
+        }
+
+        if (arrowLeft && mShakeAnimationLeft.hasEnded()) {
+            mArrowLeft.setVisibility(View.VISIBLE);
+            mArrowLeft.startAnimation(mShakeAnimationLeft);
+        }
+
+        if (arrowLeft && mShakeAnimationRight.hasEnded()) {
+            mArrowRight.setVisibility(View.VISIBLE);
+            mArrowRight.startAnimation(mShakeAnimationRight);
+        }
 
     }
 }

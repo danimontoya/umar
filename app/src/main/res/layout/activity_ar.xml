@@ -38,7 +38,7 @@
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="@dimen/margin_16dp"
             android:alpha=".9"
-            android:minHeight="75dp"
+            android:minHeight="50dp"
             app:srcCompat="@mipmap/uma_logo"/>
 
         <TextView
@@ -49,8 +49,29 @@
             android:layout_marginEnd="@dimen/margin_16dp"
             android:layout_marginStart="@dimen/margin_16dp"
             android:layout_marginTop="10dp"
-            android:paddingBottom="@dimen/margin_16dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
             android:text="@string/gps_is_loading"/>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/arrow_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        app:srcCompat="@mipmap/arrow_left"/>
+
+    <ImageView
+        android:id="@+id/arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        app:srcCompat="@mipmap/arrow_right"/>
 
 </FrameLayout>
