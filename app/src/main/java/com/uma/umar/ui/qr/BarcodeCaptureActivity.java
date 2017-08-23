@@ -41,7 +41,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.uma.umar.BaseActivity;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.BarcodePlace;
 import com.uma.umar.ui.qr.camera.CameraSource;

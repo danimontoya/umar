@@ -1,4 +1,4 @@
-package com.uma.umar.helper;
+package com.uma.umar.utils;
 
 import android.location.Location;
 

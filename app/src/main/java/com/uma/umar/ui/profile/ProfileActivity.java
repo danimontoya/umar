@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.uma.umar.BaseActivity;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.Profile;
 import com.uma.umar.ui.dashboard.DashboardActivity;

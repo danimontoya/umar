@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uma.umar.BaseActivity;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
@@ -240,7 +240,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                 if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    updateLatestLocation();
+                    updateLatestLocation(location);
                 }
             }
 
@@ -251,7 +251,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
 
                 if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    updateLatestLocation();
+                    updateLatestLocation(location);
                 }
             }
         } catch (Exception ex) {
@@ -260,7 +260,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         }
     }
 
-    private void updateLatestLocation() {
+    private void updateLatestLocation(Location locationUpdated) {
         if (arOverlayView != null && location != null) {
             arOverlayView.updateCurrentLocation(location);
             tvCurrentLocation.setText(getString(R.string.lat_lon_alt,
@@ -270,7 +270,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
 
     @Override
     public void onLocationChanged(Location location) {
-        updateLatestLocation();
+        updateLatestLocation(location);
     }
 
     @Override

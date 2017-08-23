@@ -1,10 +1,10 @@
-package com.uma.umar;
+package com.uma.umar.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 
-import com.uma.umar.ui.UmARInitActivity;
+import com.uma.umar.R;
 
 /**
  * Created by danieh on 6/26/17.

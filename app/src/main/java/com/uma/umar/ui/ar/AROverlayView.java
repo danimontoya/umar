@@ -12,13 +12,12 @@ import android.opengl.Matrix;
 import android.view.View;
 
 import com.uma.umar.R;
-import com.uma.umar.helper.LocationHelper;
+import com.uma.umar.utils.LocationHelper;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
 import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -86,7 +85,7 @@ public class AROverlayView extends View {
             // cameraCoordinateVector[2] is z, that always less than 0 to display on right position
             // if z > 0, the point will display on the opposite
             if (cameraCoordinateVector[2] < 0) {
-                UMALog.d(TAG, "daniehhhh");
+                UMALog.d(TAG, "daniehhhh got in here!");
                 gotIn = true;
                 final float x = (0.5f + cameraCoordinateVector[0] / cameraCoordinateVector[3]) * canvas.getWidth();
                 final float y = (0.5f - cameraCoordinateVector[1] / cameraCoordinateVector[3]) * canvas.getHeight();
@@ -102,29 +101,9 @@ public class AROverlayView extends View {
                 boolean condd = condRight && condLeft;
                 //mListener.shouldBeVisibleAnyArrow(!condd, !condd);
                 showArrows = showArrows && condd;
-
-                // FIXME get images before and cache them
-//                Picasso.with(getContext())
-//                        .load(arPoints.get(i).getUrl())
-//                        .into(new Target() {
-//                            @Override
-//                            public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
-//                                canvas.drawBitmap(bitmap, x, y, paint);
-//                            }
-//
-//                            @Override
-//                            public void onBitmapFailed(Drawable drawable) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onPrepareLoad(Drawable drawable) {
-//
-//                            }
-//                        });
             }
         }
-        if (gotIn){
+        if (gotIn) {
             mListener.shouldBeVisibleAnyArrow(!showArrows, !showArrows);
         } else {
             mListener.shouldBeVisibleAnyArrow(true, true);

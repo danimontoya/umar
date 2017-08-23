@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import com.uma.umar.BaseActivity;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 
 public class WebViewActivity extends BaseActivity {

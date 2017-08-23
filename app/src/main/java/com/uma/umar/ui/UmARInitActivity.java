@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.uma.umar.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.ui.dashboard.DashboardActivity;
 import com.uma.umar.ui.profile.ProfileActivity;
