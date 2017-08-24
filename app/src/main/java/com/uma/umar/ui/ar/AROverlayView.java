@@ -12,9 +12,9 @@ import android.opengl.Matrix;
 import android.view.View;
 
 import com.uma.umar.R;
-import com.uma.umar.utils.LocationHelper;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
+import com.uma.umar.utils.LocationHelper;
 import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
@@ -92,11 +92,13 @@ public class AROverlayView extends View {
 
                 Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
                 canvas.drawBitmap(bitmap, x, y, paint);
-                canvas.drawText(arPoints.get(i).getName(), x - (25 * arPoints.get(i).getName().length() / 2), y - 80, paint);
+                String poiName = arPoints.get(i).getName();
+                float textWidth = paint.measureText(poiName);
+                canvas.drawText(poiName, x - (25 * poiName.length() / 2), y - 80, paint);
 
-                boolean condRight = x > -MARGIN;
-                boolean condLeft = x < canvas.getWidth() + MARGIN;
-                UMALog.d(TAG, arPoints.get(i).getName() + " Should be visible XXX ?? " + condRight + " && " + condLeft + " ? " + (condRight && condLeft));
+                boolean condRight = x > -textWidth / 2;
+                boolean condLeft = x < canvas.getWidth() + textWidth / 2;
+                UMALog.d(TAG, poiName + " Should be visible XXX ?? " + condRight + " && " + condLeft + " ? " + (condRight && condLeft));
 
                 boolean condd = condRight && condLeft;
                 //mListener.shouldBeVisibleAnyArrow(!condd, !condd);
