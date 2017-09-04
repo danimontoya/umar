@@ -23,19 +23,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
 import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
+import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.ArrayList;
 
-public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener, ArrowsListener {
+public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener, ArrowsListener, SeekBar.OnSeekBarChangeListener,
+        View.OnClickListener {
 
     public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
     public static final String AR_POINTS = "arPoints";
@@ -47,6 +50,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private final static int REQUEST_CAMERA_PERMISSIONS_CODE = 11;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
     private static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
+    private static final int DISTANCE_RADIO = 100;
     public Location location;
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
@@ -64,6 +68,10 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private ImageView mArrowRight;
     private Animation mShakeAnimationLeft;
     private Animation mShakeAnimationRight;
+    private SeekBar mSeekBarDistance;
+    private TextView mTextDistanceMeters;
+    private ImageView mFilterButton;
+    private boolean filterEnabled = true;
 
     public static void startActivity(Activity activity, ArrayList<ARPoint> arPoints) {
         if (arPoints == null || !UmARNetworkUtil.isNetworkAvailable()) {
@@ -81,10 +89,23 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
 
+        // if distance has never been set yet, DISTANCE_RADIO is default.
+        if (UmARSharedPreferences.getDistanceRadio() < 0)
+            UmARSharedPreferences.setDistanceRadio(DISTANCE_RADIO);
+
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         cameraContainerLayout = (FrameLayout) findViewById(R.id.camera_container_layout);
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         tvCurrentLocation = (TextView) findViewById(R.id.tv_current_location);
+        mTextDistanceMeters = (TextView) findViewById(R.id.tv_distance_meters);
+        mSeekBarDistance = (SeekBar) findViewById(R.id.seekBarDistance);
+        mSeekBarDistance.setOnSeekBarChangeListener(this);
+        mSeekBarDistance.setProgress((int) UmARSharedPreferences.getDistanceRadio());
+        mSeekBarDistance.incrementProgressBy(50);
+        mSeekBarDistance.setMax(1000);
+
+        mFilterButton = (ImageView) findViewById(R.id.imageViewFilter);
+        mFilterButton.setOnClickListener(this);
 
         mArrowLeft = (ImageView) findViewById(R.id.arrow_left);
         mArrowRight = (ImageView) findViewById(R.id.arrow_right);
@@ -235,9 +256,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
             this.locationServiceAvailable = true;
 
             if (isNetworkEnabled) {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                 if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     updateLatestLocation(location);
@@ -312,5 +331,37 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
             mArrowRight.startAnimation(mShakeAnimationRight);
         }
 
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        UmARSharedPreferences.setDistanceRadio(progress);
+        mTextDistanceMeters.setText(getString(R.string.distance_place, String.valueOf(progress) + " m"));
+        if (arOverlayView != null)
+            arOverlayView.updateDistance(progress);
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == mFilterButton.getId()) {
+            filterEnabled = !filterEnabled;
+            mFilterButton.setImageResource(filterEnabled ? R.mipmap.ic_filter_on : R.mipmap.ic_filter_off);
+            arOverlayView.updateDistanceFilter(filterEnabled);
+            mSeekBarDistance.setEnabled(filterEnabled);
+            mTextDistanceMeters.setText(getString(R.string.distance_place, filterEnabled ? String.valueOf(UmARSharedPreferences.getDistanceRadio()) + " m" : getString(R.string.filter_disabled)));
+        }
     }
 }

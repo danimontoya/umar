@@ -13,6 +13,7 @@ public class ARPoint implements Parcelable {
     private Location location;
     private String name;
     private String url;
+    private double distanceInMeters = 0;
 
     public ARPoint(String name, String url, double lat, double lon, double altitude) {
         this.name = name;
@@ -65,4 +66,12 @@ public class ARPoint implements Parcelable {
             return new ARPoint[size];
         }
     };
+
+    public void setDistanceInMeters(double distanceInMeters) {
+        this.distanceInMeters = distanceInMeters;
+    }
+
+    public double getDistanceInMeters() {
+        return distanceInMeters;
+    }
 }

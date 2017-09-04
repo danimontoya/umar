@@ -31,6 +31,35 @@ public class Place {
     public Place() {
     }
 
+    /**
+     * [Name=" + placeSplit[1] + " , latitude=" + placeSplit[2] + " , longitude=" + placeSplit[3] + " , altitude=" + placeSplit[4] + " , image=" + placeSplit[5] + "]
+     *
+     * @param placeSplit
+     */
+    public Place(String[] placeSplit, int floor) {
+        if (Character.isDigit(placeSplit[1].charAt(0))) {
+            setName_en("Classroom " + placeSplit[1]);
+            setName_es("Aula " + placeSplit[1]);
+        } else {
+            if (placeSplit[1].contains("Servicio")) {
+                setName_es(placeSplit[1]);
+                setName_en(placeSplit[1].replace("Servicio", "Toilet"));
+            } else if (placeSplit[1].contains("Salon de Actos")) {
+                setName_es(placeSplit[1]);
+                setName_en(placeSplit[1].replace("Salon de Actos", "Assembly Hall"));
+            } else {
+                setName_es(placeSplit[1]);
+                setName_en(placeSplit[1]);
+            }
+
+        }
+        setLatitude(Double.parseDouble(placeSplit[2]));
+        setLongitude(Double.parseDouble(placeSplit[3]));
+        setAltitude(Double.parseDouble(placeSplit[4]));
+        setImage(placeSplit[5]);
+        setFloor(floor);
+    }
+
     public String getName_es() {
         return name_es;
     }
@@ -97,5 +126,10 @@ public class Place {
 
     public void setProfiles(HashMap<String, String> profiles) {
         this.profiles = profiles;
+    }
+
+    @Override
+    public String toString() {
+        return "[Name: " + getName() + ", Latitude: " + getLatitude() + ", Longitude: " + getLongitude() + ", Altitude: " + getAltitude() + ", Floor: " + getFloor() + ", Image: " + getImage() + "]";
     }
 }

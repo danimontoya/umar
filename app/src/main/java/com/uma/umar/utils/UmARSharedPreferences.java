@@ -1,14 +1,9 @@
 package com.uma.umar.utils;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import com.uma.umar.UmARApplication;
-
-import java.util.UUID;
 
 /**
  * Created by danieh on 7/20/17.
@@ -44,5 +39,13 @@ public class UmARSharedPreferences {
 
     public static String getLanguage() {
         return getSharedPrefs().getString(FirebaseConstants.LANGUAGE, null);
+    }
+
+    public static void setDistanceRadio(float distanceRadio) {
+        getSharedPrefs().edit().putFloat(FirebaseConstants.PLACES_DISTANCE, distanceRadio).apply();
+    }
+
+    public static float getDistanceRadio() {
+        return getSharedPrefs().getFloat(FirebaseConstants.PLACES_DISTANCE, -1f);
     }
 }

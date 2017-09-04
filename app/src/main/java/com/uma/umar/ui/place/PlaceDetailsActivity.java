@@ -20,10 +20,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.model.Place;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.ui.ar.ARActivity;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
@@ -109,7 +109,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
 
         // Add a marker and move the camera
         LatLng latLng = new LatLng(mPlace.getLatitude(), mPlace.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(latLng).title(mPlace.getName()).icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker)));
+        mMap.addMarker(new MarkerOptions().position(latLng).title(mPlace.getName()).icon(BitmapDescriptorFactory.fromResource(R.mipmap.marker_128)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         CameraPosition cameraPosition = new CameraPosition.Builder()

@@ -64,5 +64,7 @@
     <string name="email_informatica">director@informatica.uma.es</string>
     <string name="lat_lon_alt">Current Location: \nLat: %1$s, Long: %2$s, Alt: %3$s</string>
     <string name="gps_is_loading">GPS is loading...</string>
+    <string name="distance_place">Distance: %1$s</string>
+    <string name="filter_disabled">Filter disabled!</string>
 
 </resources>
