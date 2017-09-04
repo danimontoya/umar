@@ -131,7 +131,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
             ARPoint arPoint = new ARPoint(mPlace.getName(), mPlace.getImage(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
             ArrayList<ARPoint> arPoints = new ArrayList<>();
             arPoints.add(arPoint);
-            ARActivity.startActivity(this, arPoints);
+            ARActivity.startActivity(this, arPoints, false);
         }
     }
 }

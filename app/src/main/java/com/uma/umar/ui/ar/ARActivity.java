@@ -52,6 +52,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
     private static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
     private static final int DISTANCE_RADIO = 100;
+    private static final String FILTER = "FILTER";
     public Location location;
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
@@ -74,13 +75,14 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private ImageView mFilterButton;
     private boolean filterEnabled = true;
 
-    public static void startActivity(Activity activity, ArrayList<ARPoint> arPoints) {
+    public static void startActivity(Activity activity, ArrayList<ARPoint> arPoints, boolean filterEnabled) {
         if (arPoints == null || !UmARNetworkUtil.isNetworkAvailable()) {
             ((BaseActivity) activity).showDialogNoInternet();
             return;
         }
         Intent intent = new Intent(activity, ARActivity.class);
         intent.putParcelableArrayListExtra(AR_POINTS, arPoints);
+        intent.putExtra(FILTER, filterEnabled);
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.stay);
     }
@@ -93,6 +95,8 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         // if distance has never been set yet, DISTANCE_RADIO is default.
         if (UmARSharedPreferences.getDistanceRadio() < 0)
             UmARSharedPreferences.setDistanceRadio(DISTANCE_RADIO);
+
+        filterEnabled = getIntent().getExtras().getBoolean(FILTER);
 
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         cameraContainerLayout = (FrameLayout) findViewById(R.id.camera_container_layout);
@@ -118,6 +122,15 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
 
         ArrayList<ARPoint> arPoints = getIntent().getParcelableArrayListExtra(AR_POINTS);
         arOverlayView = new AROverlayView(getApplicationContext(), arPoints, this);
+
+        initFilters(filterEnabled);
+    }
+
+    private void initFilters(boolean filterEnabled) {
+        arOverlayView.updateDistanceFilter(filterEnabled);
+        mSeekBarDistance.setEnabled(filterEnabled);
+        mTextDistanceMeters.setText(getString(R.string.distance_place, filterEnabled ? String.valueOf(UmARSharedPreferences.getDistanceRadio()) + " m" : getString(R.string.filter_disabled)));
+        mFilterButton.setImageResource(filterEnabled ? R.mipmap.ic_filter_on : R.mipmap.ic_filter_off);
     }
 
 

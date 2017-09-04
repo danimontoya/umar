@@ -115,9 +115,10 @@ public class AROverlayView extends View {
 
                 Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
                 canvas.drawBitmap(bitmap, x, y, paint);
-                String poiName = arPoints.get(i).getName() + ", " + arPoints.get(i).getDistanceInMeters();
+                String poiName = arPoints.get(i).getName();
                 float textWidth = paint.measureText(poiName);
-                canvas.drawText(poiName, x - (25 * poiName.length() / 2), y - 80, paint);
+                //canvas.drawText(poiName, (x - textWidth) / 2, y - 50, paint);
+                canvas.drawText(poiName, x - (20 * poiName.length() / 2), y - 60, paint);
 
                 boolean condRight = x > -textWidth / 2;
                 boolean condLeft = x < canvas.getWidth() + textWidth / 2;

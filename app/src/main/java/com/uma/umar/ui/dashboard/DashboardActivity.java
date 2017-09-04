@@ -175,7 +175,7 @@ public class DashboardActivity extends BaseActivity
             }
         }
 
-        ARActivity.startActivity(this, arPoints);
+        ARActivity.startActivity(this, arPoints, true);
     }
 
     @Override
