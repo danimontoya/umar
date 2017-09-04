@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.uma.umar.R;
+import com.uma.umar.UmARApplication;
 import com.uma.umar.model.Profile;
 import com.uma.umar.ui.schools.listener.SchoolClickListener;
 
@@ -32,7 +33,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void bind(Profile profile) {
         mName.setText(profile.getName());
-        Picasso.with(mImage.getContext()).load(profile.getImage()).into(mImage);
+        UmARApplication.getInstance().getPicasso().with(mImage.getContext()).load(profile.getImage()).into(mImage);
     }
 
     public void setOnClickListener(SchoolClickListener listener) {

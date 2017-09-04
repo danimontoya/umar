@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.os.Build;
 
 import com.google.firebase.FirebaseApp;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.Picasso;
 import com.uma.umar.utils.FirebaseConstants;
 import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
@@ -23,6 +25,9 @@ public class UmARApplication extends Application {
 
     private static UmARApplication mInstance;
 
+    private LruCache mCache;
+    private Picasso mPicasso;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -32,6 +37,7 @@ public class UmARApplication extends Application {
         UMALog.setLoggingEnabled(BuildConfig.DEBUG);
         UmARNetworkUtil.init(this);
         FirebaseApp.initializeApp(this);
+        setupImageManager();
 
         String language = Locale.getDefault().getLanguage();
 
@@ -99,5 +105,16 @@ public class UmARApplication extends Application {
             return true;
         String language = instance.getLocale().getLanguage();
         return FirebaseConstants.LANGUAGE_EN.equals(language);
+    }
+
+    private void setupImageManager() {
+        Picasso.Builder builder = new Picasso.Builder(this);
+        mCache = new LruCache(this);
+        builder.memoryCache(mCache);
+        mPicasso = builder.build();
+    }
+
+    public Picasso getPicasso() {
+        return mPicasso;
     }
 }

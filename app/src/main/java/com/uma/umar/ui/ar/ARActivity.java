@@ -107,7 +107,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         mSeekBarDistance.setOnSeekBarChangeListener(this);
         mSeekBarDistance.setProgress((int) UmARSharedPreferences.getDistanceRadio());
         mSeekBarDistance.incrementProgressBy(50);
-        mSeekBarDistance.setMax(1000);
+        mSeekBarDistance.setMax(5000);
 
         mFilterButton = (ImageView) findViewById(R.id.imageViewFilter);
         mFilterButton.setOnClickListener(this);

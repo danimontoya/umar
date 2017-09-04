@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.uma.umar.R;
+import com.uma.umar.UmARApplication;
 import com.uma.umar.model.School;
 import com.uma.umar.ui.schools.listener.SchoolClickListener;
 
@@ -35,7 +36,7 @@ public class SchoolViewHolder extends RecyclerView.ViewHolder implements View.On
     public void bind(School school) {
         mName.setText(school.getName());
         mAddress.setText(school.getAddress());
-        Picasso.with(mImage.getContext()).load(school.getLogo()).into(mImage);
+        UmARApplication.getInstance().getPicasso().with(mImage.getContext()).load(school.getLogo()).into(mImage);
     }
 
     public void setOnClickListener(SchoolClickListener listener) {

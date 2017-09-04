@@ -113,7 +113,8 @@ public class AROverlayView extends View {
                 final float x = (0.5f + cameraCoordinateVector[0] / cameraCoordinateVector[3]) * canvas.getWidth();
                 final float y = (0.5f - cameraCoordinateVector[1] / cameraCoordinateVector[3]) * canvas.getHeight();
 
-                Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
+                //Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
+                Bitmap bitmap = arPoints.get(i).getBitmap();
                 canvas.drawBitmap(bitmap, x, y, paint);
                 String poiName = arPoints.get(i).getName();
                 float textWidth = paint.measureText(poiName);

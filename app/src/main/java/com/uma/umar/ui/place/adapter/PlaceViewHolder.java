@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.uma.umar.R;
+import com.uma.umar.UmARApplication;
 import com.uma.umar.model.Place;
 import com.uma.umar.ui.place.listener.PlaceClickListener;
 import com.uma.umar.ui.schools.listener.SchoolClickListener;
@@ -43,7 +44,7 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
         builder.append(place.getAltitude());
         builder.append("]");
         mLocation.setText(builder.toString());
-        Picasso.with(mImage.getContext()).load(place.getImage()).into(mImage);
+        UmARApplication.getInstance().getPicasso().with(mImage.getContext()).load(place.getImage()).into(mImage);
     }
 
     public void setOnClickListener(PlaceClickListener listener) {
