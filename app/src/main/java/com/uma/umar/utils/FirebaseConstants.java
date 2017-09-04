@@ -6,7 +6,6 @@ package com.uma.umar.utils;
 
 public class FirebaseConstants {
 
-
     public static final String SCHOOLS = "schools";
     public static final String SCHOOL_ID = "schoolId";
 
@@ -19,4 +18,7 @@ public class FirebaseConstants {
     public static final String LANGUAGE = "language";
     public static final String LANGUAGE_ES = "es";
     public static final String LANGUAGE_EN = "en";
+
+    public static final int DEFAULT_ANIM_DURATION = 300;
+    public static final int DEFAULT_HALF_ANIM_DURATION = DEFAULT_ANIM_DURATION / 2;
 }

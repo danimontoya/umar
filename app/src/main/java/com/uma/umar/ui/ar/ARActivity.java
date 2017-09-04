@@ -32,6 +32,7 @@ import com.uma.umar.model.ARPoint;
 import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARAnimationUtil;
 import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
@@ -358,10 +359,11 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         int id = view.getId();
         if (id == mFilterButton.getId()) {
             filterEnabled = !filterEnabled;
-            mFilterButton.setImageResource(filterEnabled ? R.mipmap.ic_filter_on : R.mipmap.ic_filter_off);
             arOverlayView.updateDistanceFilter(filterEnabled);
             mSeekBarDistance.setEnabled(filterEnabled);
             mTextDistanceMeters.setText(getString(R.string.distance_place, filterEnabled ? String.valueOf(UmARSharedPreferences.getDistanceRadio()) + " m" : getString(R.string.filter_disabled)));
+            //Animate to cross icon
+            UmARAnimationUtil.animateButtonIcon(mFilterButton, filterEnabled ? R.mipmap.ic_filter_on : R.mipmap.ic_filter_off);
         }
     }
 }
