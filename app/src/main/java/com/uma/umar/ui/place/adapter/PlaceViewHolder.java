@@ -44,7 +44,7 @@ public class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnC
         builder.append(place.getAltitude());
         builder.append("]");
         mLocation.setText(builder.toString());
-        UmARApplication.getInstance().getPicasso().with(mImage.getContext()).load(place.getImage()).into(mImage);
+        Picasso.with(mImage.getContext()).load(place.getImage()).into(mImage);
     }
 
     public void setOnClickListener(PlaceClickListener listener) {

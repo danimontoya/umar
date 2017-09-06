@@ -36,7 +36,7 @@ public class SchoolViewHolder extends RecyclerView.ViewHolder implements View.On
     public void bind(School school) {
         mName.setText(school.getName());
         mAddress.setText(school.getAddress());
-        UmARApplication.getInstance().getPicasso().with(mImage.getContext()).load(school.getLogo()).into(mImage);
+        Picasso.with(mImage.getContext()).load(school.getLogo()).into(mImage);
     }
 
     public void setOnClickListener(SchoolClickListener listener) {

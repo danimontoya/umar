@@ -33,7 +33,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void bind(Profile profile) {
         mName.setText(profile.getName());
-        UmARApplication.getInstance().getPicasso().with(mImage.getContext()).load(profile.getImage()).into(mImage);
+        Picasso.with(mImage.getContext()).load(profile.getImage()).into(mImage);
     }
 
     public void setOnClickListener(SchoolClickListener listener) {

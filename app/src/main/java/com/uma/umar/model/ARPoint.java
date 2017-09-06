@@ -8,7 +8,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -40,7 +39,7 @@ public class ARPoint implements Parcelable, Target {
         location.setLatitude(lat);
         location.setLongitude(lon);
         location.setAltitude(altitude);
-        UmARApplication.getInstance().getPicasso().with(getContext()).load(url).into(this);
+        Picasso.with(getContext()).load(url).into(this);
     }
 
     public Location getLocation() {
@@ -116,7 +115,7 @@ public class ARPoint implements Parcelable, Target {
     }
 
     public Bitmap getBitmap() {
-        UmARApplication.getInstance().getPicasso().with(getContext()).load(url).into(this);
+        Picasso.with(getContext()).load(url).into(this);
         return bitmap != null ? bitmap : BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
     }
 
@@ -138,9 +137,8 @@ public class ARPoint implements Parcelable, Target {
                 //Check if the x and y position of the touch is inside the bitmap
                 if (x > bitmapXPosition && x < bitmapXPosition + bitmap.getWidth() && y > bitmapYPosition && y < bitmapYPosition + bitmap.getWidth()) {
                     //Bitmap touched
-                    Toast.makeText(UmARApplication.getContext(), getName(), Toast.LENGTH_SHORT).show();
+                    return true;
                 }
-                return true;
         }
         return false;
     }
