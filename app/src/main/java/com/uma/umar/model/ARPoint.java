@@ -6,6 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -20,13 +23,17 @@ import static com.uma.umar.UmARApplication.getContext;
 
 public class ARPoint implements Parcelable, Target {
 
-    private Location location;
+    private String placeId;
     private String name;
     private String url;
+    private Location location;
     private double distanceInMeters = 0;
     private Bitmap bitmap;
+    private int bitmapXPosition;
+    private int bitmapYPosition;
 
-    public ARPoint(String name, String url, double lat, double lon, double altitude) {
+    public ARPoint(String placeId, String name, String url, double lat, double lon, double altitude) {
+        this.placeId = placeId;
         this.name = name;
         this.url = url;
         location = new Location("ARPoint");
@@ -49,9 +56,10 @@ public class ARPoint implements Parcelable, Target {
     }
 
     protected ARPoint(Parcel in) {
-        location = (Location) in.readValue(Location.class.getClassLoader());
+        placeId = in.readString();
         name = in.readString();
         url = in.readString();
+        location = (Location) in.readValue(Location.class.getClassLoader());
     }
 
     @Override
@@ -61,9 +69,10 @@ public class ARPoint implements Parcelable, Target {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(location);
+        dest.writeString(placeId);
         dest.writeString(name);
         dest.writeString(url);
+        dest.writeValue(location);
     }
 
     @SuppressWarnings("unused")
@@ -87,6 +96,10 @@ public class ARPoint implements Parcelable, Target {
         return distanceInMeters;
     }
 
+    public String getPlaceId() {
+        return placeId;
+    }
+
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
         this.bitmap = bitmap;
@@ -105,5 +118,30 @@ public class ARPoint implements Parcelable, Target {
     public Bitmap getBitmap() {
         UmARApplication.getInstance().getPicasso().with(getContext()).load(url).into(this);
         return bitmap != null ? bitmap : BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
+    }
+
+    public void setBitmapXYPosition(int bitmapXPosition, int bitmapYPosition) {
+        this.bitmapXPosition = bitmapXPosition;
+        this.bitmapYPosition = bitmapYPosition;
+    }
+
+    public boolean isTouched(View view, MotionEvent motionEvent) {
+
+        if (bitmap == null)
+            return false;
+
+        float x = motionEvent.getX();
+        float y = motionEvent.getY();
+
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //Check if the x and y position of the touch is inside the bitmap
+                if (x > bitmapXPosition && x < bitmapXPosition + bitmap.getWidth() && y > bitmapYPosition && y < bitmapYPosition + bitmap.getWidth()) {
+                    //Bitmap touched
+                    Toast.makeText(UmARApplication.getContext(), getName(), Toast.LENGTH_SHORT).show();
+                }
+                return true;
+        }
+        return false;
     }
 }

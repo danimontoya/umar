@@ -30,7 +30,9 @@ import android.widget.Toast;
 import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.ui.BaseActivity;
+import com.uma.umar.ui.ar.listener.ARPointListener;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
+import com.uma.umar.ui.place.PlaceDetailsActivity;
 import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARAnimationUtil;
 import com.uma.umar.utils.UmARNetworkUtil;
@@ -38,8 +40,8 @@ import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.ArrayList;
 
-public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener, ArrowsListener, SeekBar.OnSeekBarChangeListener,
-        View.OnClickListener {
+public class ARActivity extends BaseActivity implements SensorEventListener, LocationListener, ArrowsListener, ARPointListener,
+        SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
     public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
     public static final String AR_POINTS = "arPoints";
@@ -121,7 +123,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
         mArrowRight.startAnimation(mShakeAnimationRight);
 
         ArrayList<ARPoint> arPoints = getIntent().getParcelableArrayListExtra(AR_POINTS);
-        arOverlayView = new AROverlayView(getApplicationContext(), arPoints, this);
+        arOverlayView = new AROverlayView(getApplicationContext(), arPoints, this, this);
 
         initFilters(filterEnabled);
     }
@@ -379,5 +381,10 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
             //Animate to cross icon
             UmARAnimationUtil.animateButtonIcon(mFilterButton, filterEnabled ? R.mipmap.ic_filter_on : R.mipmap.ic_filter_off);
         }
+    }
+
+    @Override
+    public void onClickARPoint(String placeId) {
+        PlaceDetailsActivity.startActivity(this, placeId);
     }
 }

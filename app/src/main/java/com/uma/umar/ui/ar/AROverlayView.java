@@ -8,21 +8,25 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.opengl.Matrix;
+import android.support.design.widget.Snackbar;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.uma.umar.model.ARPoint;
+import com.uma.umar.ui.ar.listener.ARPointListener;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
 import com.uma.umar.utils.LocationHelper;
-import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by ntdat on 1/13/17.
  */
 
-public class AROverlayView extends View {
+public class AROverlayView extends View implements View.OnTouchListener {
 
     private static final String TAG = "AROverlayView";
     private static final int MARGIN = 300;
@@ -32,7 +36,8 @@ public class AROverlayView extends View {
     private float[] rotatedProjectionMatrix = new float[16];
     private Location currentLocation;
     private List<ARPoint> arPoints;
-    private ArrowsListener mListener;
+    private ArrowsListener mArrowsListener;
+    private ARPointListener mARPointListener;
     private int maxDistance;
     private boolean filterEnabled = true;
 
@@ -40,13 +45,16 @@ public class AROverlayView extends View {
         super(context);
         this.context = context;
         arPoints = new ArrayList<>();
+        setOnTouchListener(this);
     }
 
-    public AROverlayView(Context context, ArrayList<ARPoint> arPoints, ArrowsListener listener) {
+    public AROverlayView(Context context, ArrayList<ARPoint> arPoints, ArrowsListener arrowsListener, ARPointListener arPointListener) {
         super(context);
         this.context = context;
         this.arPoints = arPoints;
-        this.mListener = listener;
+        this.mArrowsListener = arrowsListener;
+        this.mARPointListener = arPointListener;
+        setOnTouchListener(this);
     }
 
     public void updateRotatedProjectionMatrix(float[] rotatedProjectionMatrix) {
@@ -72,6 +80,12 @@ public class AROverlayView extends View {
             double distanceInMeters = EARTH_RADIO_IN_METERS * c;
             arPoint.setDistanceInMeters(distanceInMeters);
         }
+        Collections.sort(arPoints, new Comparator<ARPoint>() {
+            @Override
+            public int compare(ARPoint arPoint, ARPoint t1) {
+                return (int) (arPoint.getDistanceInMeters() - t1.getDistanceInMeters());
+            }
+        });
 
         this.invalidate();
     }
@@ -119,7 +133,9 @@ public class AROverlayView extends View {
                 //Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
                 //canvas.drawBitmap(bitmap, x, y, paint);
                 Bitmap bitmap = arPoints.get(i).getBitmap();
-                canvas.drawBitmap(bitmap, x - bitmap.getWidth() / 2, y, paint);
+                int xBitmapCentered = (int) (x - bitmap.getWidth() / 2);
+                canvas.drawBitmap(bitmap, xBitmapCentered, y, paint);
+                arPoints.get(i).setBitmapXYPosition(xBitmapCentered, (int) y);
                 String poiName = arPoints.get(i).getName();
                 float textWidth = paint.measureText(poiName);
                 canvas.drawText(poiName, x, y - 20, paint);
@@ -131,13 +147,13 @@ public class AROverlayView extends View {
 //                UMALog.d(TAG, poiName + " Should be visible?? condLeft = " + condLeft + ", " + -textWidth / 2);
 //                UMALog.d(TAG, poiName + " Should be visible?? condRight = " + condRight + ", " + canvas.getWidth() + textWidth / 2);
 //
-//                mListener.shouldBeVisibleAnyArrow(!condLeft, !condRight);
+//                mArrowsListener.shouldBeVisibleAnyArrow(!condLeft, !condRight);
             }
         }
         if (gotIn) {
-            mListener.shouldBeVisibleAnyArrow(!condLeft, !condRight);
+            mArrowsListener.shouldBeVisibleAnyArrow(!condLeft, !condRight);
         } else {
-            mListener.shouldBeVisibleAnyArrow(true, true);
+            mArrowsListener.shouldBeVisibleAnyArrow(true, true);
         }
     }
 
@@ -149,5 +165,24 @@ public class AROverlayView extends View {
     public void updateDistanceFilter(boolean filterEnabled) {
         this.filterEnabled = filterEnabled;
         invalidate();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return onTouchChilds(view, motionEvent);
+    }
+
+    private boolean onTouchChilds(View view, MotionEvent motionEvent) {
+        for (ARPoint arPoint : arPoints) {
+            if (arPoint.isTouched(view, motionEvent)) {
+                if (arPoints.size() == 1) {
+                    Snackbar.make(this, "You came from place details, go back to see them again!", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    mARPointListener.onClickARPoint(arPoint.getPlaceId());
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

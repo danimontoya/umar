@@ -41,6 +41,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     private GoogleMap mMap;
     private DatabaseReference mPlaceRef;
     private Place mPlace;
+    private String mPlaceKey;
 
     public static void startActivity(Activity activity, String placeKey) {
         if (!UmARNetworkUtil.isNetworkAvailable()) {
@@ -99,6 +100,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         mPlace = dataSnapshot.getValue(Place.class);
+        mPlaceKey = dataSnapshot.getKey();
         if (mPlace == null) {
             showDialogInformationException();
             return;
@@ -128,7 +130,7 @@ public class PlaceDetailsActivity extends BaseActivity implements OnMapReadyCall
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.umar_image) {
-            ARPoint arPoint = new ARPoint(mPlace.getName(), mPlace.getImage(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
+            ARPoint arPoint = new ARPoint(mPlaceKey, mPlace.getName(), mPlace.getImage(), mPlace.getLatitude(), mPlace.getLongitude(), mPlace.getAltitude());
             ArrayList<ARPoint> arPoints = new ArrayList<>();
             arPoints.add(arPoint);
             ARActivity.startActivity(this, arPoints, false);

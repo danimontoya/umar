@@ -169,7 +169,7 @@ public class DashboardActivity extends BaseActivity
         for (DataSnapshot placeSnapshot : dataSnapshotChildren) {
             Place place = placeSnapshot.getValue(Place.class);
             if (place != null && place.getProfiles().containsValue(profileSelectedId)) {
-                ARPoint arPoint = new ARPoint(place.getName(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
+                ARPoint arPoint = new ARPoint(placeSnapshot.getKey(), place.getName(), place.getImage(), place.getLatitude(), place.getLongitude(), place.getAltitude());
                 // TODO: 7/4/17 Picasso get bitmap here?
                 arPoints.add(arPoint);
             }
