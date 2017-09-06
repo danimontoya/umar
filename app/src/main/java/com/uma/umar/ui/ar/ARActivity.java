@@ -296,6 +296,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
     private void updateLatestLocation(Location locationUpdated) {
         if (arOverlayView != null && location != null) {
             arOverlayView.updateCurrentLocation(location);
+            arOverlayView.updateDistance((int) UmARSharedPreferences.getDistanceRadio());
             tvCurrentLocation.setText(getString(R.string.lat_lon_alt,
                     String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()), String.valueOf(location.getAltitude())));
         }
@@ -340,7 +341,7 @@ public class ARActivity extends BaseActivity implements SensorEventListener, Loc
             mArrowLeft.startAnimation(mShakeAnimationLeft);
         }
 
-        if (arrowLeft && mShakeAnimationRight.hasEnded()) {
+        if (arrowRight && mShakeAnimationRight.hasEnded()) {
             mArrowRight.setVisibility(View.VISIBLE);
             mArrowRight.startAnimation(mShakeAnimationRight);
         }

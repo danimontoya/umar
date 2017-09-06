@@ -2,7 +2,6 @@ package com.uma.umar.ui.ar;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,10 +10,10 @@ import android.location.Location;
 import android.opengl.Matrix;
 import android.view.View;
 
-import com.uma.umar.R;
 import com.uma.umar.model.ARPoint;
 import com.uma.umar.ui.ar.listener.ArrowsListener;
 import com.uma.umar.utils.LocationHelper;
+import com.uma.umar.utils.UMALog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +76,7 @@ public class AROverlayView extends View {
         this.invalidate();
     }
 
+
     @Override
     protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
@@ -90,8 +90,11 @@ public class AROverlayView extends View {
         paint.setColor(Color.WHITE);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
         paint.setTextSize(50);
+        paint.setTextAlign(Paint.Align.CENTER);
 
         boolean showArrows = true;
+        boolean condRight = true;
+        boolean condLeft = true;
         boolean gotIn = false;
         for (int i = 0; i < arPoints.size(); i++) {
             if (filterEnabled && arPoints.get(i).getDistanceInMeters() > maxDistance) {
@@ -114,24 +117,25 @@ public class AROverlayView extends View {
                 final float y = (0.5f - cameraCoordinateVector[1] / cameraCoordinateVector[3]) * canvas.getHeight();
 
                 //Bitmap bitmap = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.marker_256);
+                //canvas.drawBitmap(bitmap, x, y, paint);
                 Bitmap bitmap = arPoints.get(i).getBitmap();
-                canvas.drawBitmap(bitmap, x, y, paint);
+                canvas.drawBitmap(bitmap, x - bitmap.getWidth() / 2, y, paint);
                 String poiName = arPoints.get(i).getName();
                 float textWidth = paint.measureText(poiName);
-                //canvas.drawText(poiName, (x - textWidth) / 2, y - 50, paint);
-                canvas.drawText(poiName, x - (20 * poiName.length() / 2), y - 60, paint);
+                canvas.drawText(poiName, x, y - 20, paint);
+                //canvas.drawText(poiName, x - (30 * poiName.length() / 2), y - 80, paint);
 
-                boolean condRight = x > -textWidth / 2;
-                boolean condLeft = x < canvas.getWidth() + textWidth / 2;
-                //UMALog.d(TAG, poiName + " Should be visible XXX ?? " + condRight + " && " + condLeft + " ? " + (condRight && condLeft));
-
-                boolean condd = condRight && condLeft;
-                //mListener.shouldBeVisibleAnyArrow(!condd, !condd);
-                showArrows = showArrows && condd;
+                condLeft = x > -textWidth / 2;
+                condRight = x < canvas.getWidth() + textWidth / 2;
+//                UMALog.d(TAG, poiName + " Should be visible?? " + condRight + " && " + condLeft + " ; x = " + x);
+//                UMALog.d(TAG, poiName + " Should be visible?? condLeft = " + condLeft + ", " + -textWidth / 2);
+//                UMALog.d(TAG, poiName + " Should be visible?? condRight = " + condRight + ", " + canvas.getWidth() + textWidth / 2);
+//
+//                mListener.shouldBeVisibleAnyArrow(!condLeft, !condRight);
             }
         }
         if (gotIn) {
-            mListener.shouldBeVisibleAnyArrow(!showArrows, !showArrows);
+            mListener.shouldBeVisibleAnyArrow(!condLeft, !condRight);
         } else {
             mListener.shouldBeVisibleAnyArrow(true, true);
         }
