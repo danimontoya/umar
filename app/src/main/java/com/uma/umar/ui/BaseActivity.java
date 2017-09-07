@@ -1,8 +1,11 @@
 package com.uma.umar.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.uma.umar.R;
 
@@ -31,6 +34,14 @@ public class BaseActivity extends AppCompatActivity {
                 .setMessage(R.string.need_internet)
                 .setPositiveButton(R.string.ok, null)
                 .show();
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if (view == null)
+            view = new View(this);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

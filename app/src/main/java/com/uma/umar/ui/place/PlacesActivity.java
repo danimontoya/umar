@@ -14,9 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.Place;
+import com.uma.umar.ui.BaseActivity;
+import com.uma.umar.ui.custom.UmARSearchView;
 import com.uma.umar.ui.place.adapter.PlaceRecyclerAdapter;
 import com.uma.umar.ui.place.listener.PlacesListener;
 import com.uma.umar.ui.schools.adapter.RecyclerDividerDecorator;
@@ -27,8 +28,9 @@ import com.uma.umar.utils.UmARSharedPreferences;
 
 import java.util.LinkedHashMap;
 
-public class PlacesActivity extends BaseActivity implements ValueEventListener, PlacesListener {
+public class PlacesActivity extends BaseActivity implements ValueEventListener, PlacesListener, UmARSearchView.SearchInteractionListener {
 
+    private UmARSearchView mSearchView;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
@@ -51,6 +53,8 @@ public class PlacesActivity extends BaseActivity implements ValueEventListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places);
 
+        mSearchView = (UmARSearchView) findViewById(R.id.searchView);
+        mSearchView.setInteractionListener(this);
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar_places);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_places);
 
@@ -61,6 +65,7 @@ public class PlacesActivity extends BaseActivity implements ValueEventListener, 
     protected void onResume() {
         super.onResume();
         mPlacesRef.addValueEventListener(this);
+        mRecyclerView.requestFocus();
     }
 
     @Override
@@ -98,8 +103,6 @@ public class PlacesActivity extends BaseActivity implements ValueEventListener, 
             }
         }
 
-        System.out.println("lololo");
-
         mAdapter = new PlaceRecyclerAdapter(this, PlacesActivity.this, mPlacesMap);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -111,6 +114,7 @@ public class PlacesActivity extends BaseActivity implements ValueEventListener, 
 
         mRecyclerView.setAdapter(mAdapter);
         mProgressBar.setVisibility(View.GONE);
+        onInitiateSearch(mSearchView.getEditText().getText().toString(), true);
     }
 
     @Override
@@ -123,5 +127,28 @@ public class PlacesActivity extends BaseActivity implements ValueEventListener, 
         Toast.makeText(this, "Place: " + place.getName() + ", Key: " + placeKey, Toast.LENGTH_SHORT).show();
         UMALog.d("Place", "Place: " + place.getName() + ", Key: " + placeKey);
         PlaceDetailsActivity.startActivity(this, placeKey);
+    }
+
+    @Override
+    public void onInitiateSearch(String like, boolean onEnterPressed) {
+        if (like != null && mAdapter != null) {
+            mAdapter.filter(like);
+        }
+        if (onEnterPressed) {
+            hideKeyboard();
+        }
+    }
+
+    @Override
+    public void onSearchCleared() {
+        mAdapter.filter("");
+    }
+
+    @Override
+    public void onTouch(boolean clickOnCross) {
+        mSearchView.reset();
+        if (clickOnCross) {
+            hideKeyboard();
+        }
     }
 }

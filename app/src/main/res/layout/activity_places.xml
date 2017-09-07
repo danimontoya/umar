@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="@dimen/margin_16dp"
-    tools:context="com.uma.umar.ui.place.PlacesActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:padding="@dimen/margin_16dp"
+                tools:context="com.uma.umar.ui.place.PlacesActivity">
 
     <LinearLayout
-        android:id="@+id/welcome_layout"
+        android:id="@+id/search_edit_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:minHeight="75dp"
-            app:srcCompat="@mipmap/uma_logo" />
+            app:srcCompat="@mipmap/uma_logo"/>
 
         <TextView
             android:id="@+id/welcome_textview"
@@ -30,7 +30,12 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/list_of_places"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <com.uma.umar.ui.custom.UmARSearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -38,7 +43,7 @@
         android:id="@+id/relative_places"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/welcome_layout"
+        android:layout_below="@+id/search_edit_frame"
         android:layout_marginTop="20dp">
 
         <ProgressBar
@@ -46,12 +51,12 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_places"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 

@@ -66,5 +66,6 @@
     <string name="gps_is_loading">GPS is loading...</string>
     <string name="distance_place">Distance: %1$s</string>
     <string name="filter_disabled">Filter disabled!</string>
+    <string name="find_your_place"><i>Find your place!</i></string>
 
 </resources>
