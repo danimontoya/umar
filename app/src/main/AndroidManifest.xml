@@ -9,6 +9,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature android:name="android.hardware.location.gps"/>
     <uses-feature android:name="android.hardware.camera2"/>
@@ -52,6 +53,8 @@
         <activity android:name=".ui.about.AboutActivity"/>
         <activity android:name=".ui.webview.WebViewActivity">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="dbd2386652a328cdbbe57798e146c19ad9231ad3" />
     </application>
-
 </manifest>

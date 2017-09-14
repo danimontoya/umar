@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
@@ -15,6 +16,7 @@ import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.Locale;
 
 /**
@@ -30,6 +32,7 @@ public class UmARApplication extends Application {
 
         mInstance = this;
 
+        Fabric.with(this, new Crashlytics());
         UMALog.setLoggingEnabled(BuildConfig.DEBUG);
         UmARNetworkUtil.init(this);
         FirebaseApp.initializeApp(this);
