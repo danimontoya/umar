@@ -20,13 +20,9 @@ import java.util.Locale;
 /**
  * Created by danieh on 6/26/17.
  */
-
 public class UmARApplication extends Application {
 
     private static UmARApplication mInstance;
-
-    private LruCache mCache;
-    private Picasso mPicasso;
 
     @Override
     public void onCreate() {
@@ -109,12 +105,8 @@ public class UmARApplication extends Application {
 
     private void setupImageManager() {
         Picasso.Builder builder = new Picasso.Builder(this);
-        mCache = new LruCache(this);
-        builder.memoryCache(mCache);
-        mPicasso = builder.build();
-    }
-
-    public Picasso getPicasso() {
-        return mPicasso;
+        LruCache lruCache = new LruCache(this);
+        builder.memoryCache(lruCache);
+        builder.build();
     }
 }
