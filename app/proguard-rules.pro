@@ -19,13 +19,19 @@
 -repackageclasses ''
 -allowaccessmodification
 
+-keepattributes SourceFile,LineNumberTable,Exceptions, Signature, InnerClasses,*Annotation*
+
 # Picasso
 -dontwarn com.squareup.okhttp.**
 
--keepattributes SourceFile,LineNumberTable,Exceptions, Signature, InnerClasses,*Annotation*
-
+# Firebase - FirebaseUI
 -keep class com.firebase.** { *; }
 -keep class com.uma.umar.model.** { *; }
 -keep class com.uma.umar.ui.schools.adapter.SchoolViewHolder { *; }
 -keep class com.uma.umar.ui.profile.adapter.ProfileViewHolder { *; }
 -keep class com.uma.umar.ui.place.adapter.PlaceViewHolder { *; }
+
+# Crashlytics
+-keep public class * extends java.lang.Exception
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
