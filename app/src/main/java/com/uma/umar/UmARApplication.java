@@ -16,8 +16,9 @@ import com.uma.umar.utils.UMALog;
 import com.uma.umar.utils.UmARNetworkUtil;
 import com.uma.umar.utils.UmARSharedPreferences;
 
-import io.fabric.sdk.android.Fabric;
 import java.util.Locale;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by danieh on 6/26/17.
@@ -32,7 +33,10 @@ public class UmARApplication extends Application {
 
         mInstance = this;
 
-        Fabric.with(this, new Crashlytics());
+        // Crashlytics enabled only for release builds
+        //if (!BuildConfig.DEBUG)
+            //Fabric.with(this, new Crashlytics());
+
         UMALog.setLoggingEnabled(BuildConfig.DEBUG);
         UmARNetworkUtil.init(this);
         FirebaseApp.initializeApp(this);
