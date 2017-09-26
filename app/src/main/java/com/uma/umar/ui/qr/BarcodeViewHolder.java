@@ -18,9 +18,7 @@ public class BarcodeViewHolder {
     public GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
 
     public ImageView mScanFrameImageView, mFlashlightButton;
-
     public TextView mBarcodePlaceTextView, mBarcodePlaceDescTextView;
-
     public ImageView mPlaceDetailsButton;
 
     public BarcodeViewHolder(View view) {

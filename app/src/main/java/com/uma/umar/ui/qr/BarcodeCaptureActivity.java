@@ -41,11 +41,12 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.R;
 import com.uma.umar.model.BarcodePlace;
+import com.uma.umar.ui.BaseActivity;
 import com.uma.umar.ui.qr.camera.CameraSource;
 import com.uma.umar.utils.UMALog;
+import com.uma.umar.utils.UmARAnimationUtil;
 
 import java.io.IOException;
 
@@ -72,6 +73,8 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
     private BarcodePlace barcodePlace;
     private Gson gson;
 
+    private boolean isFlashlightEnabled = false;
+
     public static void startActivity(Activity activity) {
         Intent intent = new Intent(activity, BarcodeCaptureActivity.class);
         activity.startActivityForResult(intent, RC_BARCODE_CAPTURE);
@@ -87,6 +90,7 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
 
         mViewHolder = new BarcodeViewHolder(findViewById(R.id.topLayout));
         mViewHolder.mPlaceDetailsButton.setOnClickListener(this);
+        mViewHolder.mFlashlightButton.setOnClickListener(this);
 
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
@@ -333,6 +337,24 @@ public final class BarcodeCaptureActivity extends BaseActivity implements Barcod
                 setResult(CommonStatusCodes.SUCCESS, data);
                 finish();
             }
+        } else if (id == mViewHolder.mFlashlightButton.getId()) {
+            setFlashMode();
         }
+    }
+
+    private void setFlashMode() {
+        UmARAnimationUtil.animateButtonIcon(mViewHolder.mFlashlightButton, toggleFlashlight() ? R.mipmap.ic_flash_on : R.mipmap.ic_flash_off);
+    }
+
+    /**
+     * @return true if flash is now on, false if it's off.
+     */
+    public boolean toggleFlashlight() {
+        if (mCameraSource == null)
+            return isFlashlightEnabled;
+
+        isFlashlightEnabled = !isFlashlightEnabled;
+        mCameraSource.setFlashMode(isFlashlightEnabled ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
+        return isFlashlightEnabled;
     }
 }
